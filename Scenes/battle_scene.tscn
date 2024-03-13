@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://rm0fl3gojt85"]
+
+[ext_resource type="PackedScene" uid="uid://bbv4m4bmhwulu" path="res://Objects/Hand.tscn" id="1_sd05e"]
+[ext_resource type="PackedScene" uid="uid://ckt8u405getih" path="res://Objects/Card.tscn" id="2_co6uo"]
+[ext_resource type="Script" path="res://Scenes/Deck.gd" id="2_jayhg"]
+[ext_resource type="JSON" path="res://Assets/cards.json" id="3_cab5y"]
+
+[node name="Battle Scene" type="Node2D"]
+
+[node name="Hand" parent="." instance=ExtResource("1_sd05e")]
+position = Vector2(257, 230)
+
+[node name="Deck" type="Node2D" parent="."]
+position = Vector2(447, 234)
+script = ExtResource("2_jayhg")
+cardData = ExtResource("3_cab5y")
+metadata/_edit_group_ = true
+
+[node name="Card" parent="Deck" instance=ExtResource("2_co6uo")]
+sprite_id = 44

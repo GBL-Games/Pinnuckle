@@ -1,0 +1,184 @@
+[
+	{
+		"id": "9C",
+		"suit": "Clubs",
+		"rank": "9",
+		"value": 0,
+		"sprite_index": 8
+	},
+	{
+		"id": "10C",
+		"suit": "Clubs",
+		"rank": "10",
+		"value": 10,
+		"sprite_index": 9
+	},
+	{
+		"id": "JC",
+		"suit": "Clubs",
+		"rank": "Jack",
+		"value": 2,
+		"sprite_index": 10
+	},
+	{
+		"id": "QC",
+		"suit": "Clubs",
+		"rank": "Queen",
+		"value": 3,
+		"sprite_index": 11
+	},
+	{
+		"id": "KC",
+		"suit": "Clubs",
+		"rank": "King",
+		"value": 4,
+		"sprite_index": 12
+	},
+	{
+		"id": "AC",
+		"suit": "Clubs",
+		"rank": "Ace",
+		"value": 11,
+		"sprite_index": 0
+	},
+	{
+		"id": "9D",
+		"suit": "Diamonds",
+		"rank": "9",
+		"value": 0,
+		"sprite_index": 23
+	},
+	{
+		"id": "10D",
+		"suit": "Diamonds",
+		"rank": "10",
+		"value": 10,
+		"sprite_index": 24
+	},
+	{
+		"id": "JD",
+		"suit": "Diamonds",
+		"rank": "Jack",
+		"value": 2,
+		"sprite_index": 25
+	},
+	{
+		"id": "QD",
+		"suit": "Diamonds",
+		"rank": "Queen",
+		"value": 3,
+		"sprite_index": 26
+	},
+	{
+		"id": "KD",
+		"suit": "Diamonds",
+		"rank": "King",
+		"value": 4,
+		"sprite_index": 27
+	},
+	{
+		"id": "AD",
+		"suit": "Diamonds",
+		"rank": "Ace",
+		"value": 11,
+		"sprite_index": 15
+	},
+	{
+		"id": "9H",
+		"suit": "Hearts",
+		"rank": "9",
+		"value": 0,
+		"sprite_index": 53
+	},
+	{
+		"id": "10H",
+		"suit": "Hearts",
+		"rank": "10",
+		"value": 10,
+		"sprite_index": 54
+	},
+	{
+		"id": "JH",
+		"suit": "Hearts",
+		"rank": "Jack",
+		"value": 2,
+		"sprite_index": 55
+	},
+	{
+		"id": "QH",
+		"suit": "Hearts",
+		"rank": "Queen",
+		"value": 3,
+		"sprite_index": 56
+	},
+	{
+		"id": "KH",
+		"suit": "Hearts",
+		"rank": "King",
+		"value": 4,
+		"sprite_index": 57
+	},
+	{
+		"id": "AH",
+		"suit": "Hearts",
+		"rank": "Ace",
+		"value": 11,
+		"sprite_index": 45
+	},
+	{
+		"id": "9S",
+		"suit": "Spades",
+		"rank": "9",
+		"value": 0,
+		"sprite_index": 38
+	},
+	{
+		"id": "10S",
+		"suit": "Spades",
+		"rank": "10",
+		"value": 10,
+		"sprite_index": 39
+	},
+	{
+		"id": "JS",
+		"suit": "Spades",
+		"rank": "Jack",
+		"value": 2,
+		"sprite_index": 40
+	},
+	{
+		"id": "QS",
+		"suit": "Spades",
+		"rank": "Queen",
+		"value": 3,
+		"sprite_index": 41
+	},
+	{
+		"id": "KS",
+		"suit": "Spades",
+		"rank": "King",
+		"value": 4,
+		"sprite_index": 42
+	},
+	{
+		"id": "AS",
+		"suit": "Spades",
+		"rank": "Ace",
+		"value": 11,
+		"sprite_index": 30
+	},
+	{
+		"id": "Joker1",
+		"suit": "Joker",
+		"rank": "Joker",
+		"value": 10,
+		"sprite_index": 58
+	},
+	{
+		"id": "Joker2",
+		"suit": "Joker",
+		"rank": "Joker",
+		"value": 10,
+		"sprite_index": 43
+	}
+]
