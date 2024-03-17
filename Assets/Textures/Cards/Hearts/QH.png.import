@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlu4m14lqdahs"
-path="res://.godot/imported/jackOfSpades.png-bafe0c8347ce06954c2e17bf1d7663dc.ctex"
+uid="uid://c3bdx2bxjn4pf"
+path="res://.godot/imported/QH.png-2ce2d5d24c782f7b40b02613303d9327.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Cards/jackOfSpades.png"
-dest_files=["res://.godot/imported/jackOfSpades.png-bafe0c8347ce06954c2e17bf1d7663dc.ctex"]
+source_file="res://Assets/Textures/Cards/Hearts/QH.png"
+dest_files=["res://.godot/imported/QH.png-2ce2d5d24c782f7b40b02613303d9327.ctex"]
 
 [params]
 

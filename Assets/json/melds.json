@@ -1,0 +1,80 @@
+[
+  {
+    "id": "pinochle",
+    "name": "Pinochle",
+    "combination": "Q♠ J♦",
+    "value": 40
+  },
+  {
+    "id": "doublePinochle",
+    "name": "Double Pinochle",
+    "combination": "2x Q♠ J♦",
+    "value": 300
+  },
+  {
+    "id": "marriage",
+    "name": "Marriage",
+    "combination": "K Q",
+    "value": 20
+  },
+  {
+    "id": "doubleMarriage",
+    "name": "Double Marriage",
+    "combination": "2x K Q",
+    "value": 40
+  },
+  {
+    "id": "dix",
+    "name": "Dix",
+    "combination": "9",
+    "value": 10
+  },
+  {
+    "id": "doubleDix",
+    "name": "Double Dix",
+    "combination": "2x 9",
+    "value": 100
+  },
+  {
+    "id": "fourAces",
+    "name": "Four Aces",
+    "combination": "A♠ A♦ A♥ A♣",
+    "value": 100
+  },
+  {
+    "id": "fourKings",
+    "name": "Four Kings",
+    "combination": "K♠ K♦ K♥ K♣",
+    "value": 80
+  },
+  {
+    "id": "fourQueens",
+    "name": "Four Queens",
+    "combination": "Q♠ Q♦ Q♥ Q♣",
+    "value": 60
+  },
+  {
+    "id": "fourJacks",
+    "name": "Four Jacks",
+    "combination": "J♠ J♦ J♥ J♣",
+    "value": 40
+  },
+  {
+    "id": "fourTen",
+    "name": "Four Tens",
+    "combination": "10♠ 10♦ 10♥ 10♣",
+    "value": 40
+  },
+  {
+    "id": "sequence",
+    "name": "Sequence",
+    "combination": "A 10 K Q J",
+    "value": 150
+  },
+  {
+    "id": "flush",
+    "name": "Flush",
+    "combination": "A K Q J 10 in same suit",
+    "value": 150
+  }
+]

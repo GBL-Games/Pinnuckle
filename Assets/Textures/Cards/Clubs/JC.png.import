@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4o5ibbaockmc"
-path="res://.godot/imported/back1.jpeg-f0e6f7d78e9d59bb69920a3ecad67c15.ctex"
+uid="uid://c4gx4gsrbl2jw"
+path="res://.godot/imported/JC.png-34f4be9096900e35330d45c4f25847dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Backs/back1.jpeg"
-dest_files=["res://.godot/imported/back1.jpeg-f0e6f7d78e9d59bb69920a3ecad67c15.ctex"]
+source_file="res://Assets/Textures/Cards/Clubs/JC.png"
+dest_files=["res://.godot/imported/JC.png-34f4be9096900e35330d45c4f25847dc.ctex"]
 
 [params]
 
