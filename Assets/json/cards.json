@@ -4,349 +4,335 @@
 		"suit": "Clubs",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/AC.png"
+		"spriteIndex": 0
 	},
 	{
 		"id": "KC",
 		"suit": "Clubs",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/KC.png"
+		"spriteIndex": 12
 	},
 	{
 		"id": "QC",
 		"suit": "Clubs",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/QC.png"
+		"spriteIndex": 11
 	},
 	{
 		"id": "JC",
 		"suit": "Clubs",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/JC.png"
+		"spriteIndex": 10
 	},
 	{
 		"id": "10C",
 		"suit": "Clubs",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/10C.png"
+		"spriteIndex": 9
 	},
 	{
 		"id": "9C",
 		"suit": "Clubs",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/9C.png"
+		"spriteIndex": 8
 	},
 	{
 		"id": "AD",
 		"suit": "Diamonds",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/AD.png"
+		"spriteIndex": 15
 	},
 	{
 		"id": "KD",
 		"suit": "Diamonds",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/KD.png"
+		"spriteIndex": 27
 	},
 	{
 		"id": "QD",
 		"suit": "Diamonds",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/QD.png"
+		"spriteIndex": 26
 	},
 	{
 		"id": "JD",
 		"suit": "Diamonds",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/JD.png"
+		"spriteIndex": 25
 	},
 	{
 		"id": "10D",
 		"suit": "Diamonds",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/10D.png"
+		"spriteIndex": 24
 	},
 	{
 		"id": "9D",
 		"suit": "Diamonds",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/9D.png"
+		"spriteIndex": 23
 	},
 	{
 		"id": "AH",
 		"suit": "Hearts",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/AH.png"
+		"spriteIndex": 45
 	},
 	{
 		"id": "KH",
 		"suit": "Hearts",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/KH.png"
+		"spriteIndex": 57
 	},
 	{
 		"id": "QH",
 		"suit": "Hearts",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/QH.png"
+		"spriteIndex": 56
 	},
 	{
 		"id": "JH",
 		"suit": "Hearts",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/JH.png"
+		"spriteIndex": 55
 	},
 	{
 		"id": "10H",
 		"suit": "Hearts",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/10H.png"
+		"spriteIndex": 54
 	},
 	{
 		"id": "9H",
 		"suit": "Hearts",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/9H.png"
+		"spriteIndex": 53
 	},
 	{
 		"id": "AS",
 		"suit": "Spades",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/AS.png"
+		"spriteIndex": 30
 	},
 	{
 		"id": "KS",
 		"suit": "Spades",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/KS.png"
+		"spriteIndex": 42
 	},
 	{
 		"id": "QS",
 		"suit": "Spades",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/QS.png"
+		"spriteIndex": 41
 	},
 	{
 		"id": "JS",
 		"suit": "Spades",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/JS.png"
+		"spriteIndex": 40
 	},
 	{
 		"id": "10S",
 		"suit": "Spades",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/10S.png"
+		"spriteIndex": 39
 	},
 	{
 		"id": "9S",
 		"suit": "Spades",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/9S.png"
+		"spriteIndex": 38
 	},
 	{
-		"id": "AC2",
+		"id": "AC-2",
 		"suit": "Clubs",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/AC.png"
+		"spriteIndex": 0
 	},
 	{
-		"id": "KC2",
+		"id": "KC-2",
 		"suit": "Clubs",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/KC.png"
+		"spriteIndex": 12
 	},
 	{
-		"id": "QC2",
+		"id": "QC-2",
 		"suit": "Clubs",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/QC.png"
+		"spriteIndex": 11
 	},
 	{
-		"id": "JC2",
+		"id": "JC-2",
 		"suit": "Clubs",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/JC.png"
+		"spriteIndex": 10
 	},
 	{
-		"id": "10C2",
+		"id": "10C-2",
 		"suit": "Clubs",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/10C.png"
+		"spriteIndex": 9
 	},
 	{
-		"id": "9C2",
+		"id": "9C-2",
 		"suit": "Clubs",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Clubs/9C.png"
+		"spriteIndex": 8
 	},
 	{
-		"id": "AD2",
+		"id": "AD-2",
 		"suit": "Diamonds",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/AD.png"
+		"spriteIndex": 15
 	},
 	{
-		"id": "KD2",
+		"id": "KD-2",
 		"suit": "Diamonds",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/KD.png"
+		"spriteIndex": 27
 	},
 	{
-		"id": "QD2",
+		"id": "QD-2",
 		"suit": "Diamonds",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/QD.png"
+		"spriteIndex": 26
 	},
 	{
-		"id": "JD2",
+		"id": "JD-2",
 		"suit": "Diamonds",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/JD.png"
+		"spriteIndex": 25
 	},
 	{
-		"id": "10D2",
+		"id": "10D-2",
 		"suit": "Diamonds",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/10D.png"
+		"spriteIndex": 24
 	},
 	{
-		"id": "9D2",
+		"id": "9D-2",
 		"suit": "Diamonds",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Diamonds/9D.png"
+		"spriteIndex": 23
 	},
 	{
-		"id": "AH2",
+		"id": "AH-2",
 		"suit": "Hearts",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/AH.png"
+		"spriteIndex": 45
 	},
 	{
-		"id": "KH2",
+		"id": "KH-2",
 		"suit": "Hearts",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/KH.png"
+		"spriteIndex": 57
 	},
 	{
-		"id": "QH2",
+		"id": "QH-2",
 		"suit": "Hearts",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/QH.png"
+		"spriteIndex": 56
 	},
 	{
-		"id": "JH2",
+		"id": "JH-2",
 		"suit": "Hearts",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/JH.png"
+		"spriteIndex": 55
 	},
 	{
-		"id": "10H2",
+		"id": "10H-2",
 		"suit": "Hearts",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/10H.png"
+		"spriteIndex": 54
 	},
 	{
-		"id": "9H2",
+		"id": "9H-2",
 		"suit": "Hearts",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Hearts/9H.png"
+		"spriteIndex": 53
 	},
 	{
-		"id": "AS2",
+		"id": "AS-2",
 		"suit": "Spades",
 		"rank": "Ace",
 		"value": 11,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/AS.png"
+		"spriteIndex": 30
 	},
 	{
-		"id": "KS2",
+		"id": "KS-2",
 		"suit": "Spades",
 		"rank": "King",
 		"value": 4,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/KS.png"
+		"spriteIndex": 42
 	},
 	{
-		"id": "QS2",
+		"id": "QS-2",
 		"suit": "Spades",
 		"rank": "Queen",
 		"value": 3,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/QS.png"
+		"spriteIndex": 41
 	},
 	{
-		"id": "JS2",
+		"id": "JS-2",
 		"suit": "Spades",
 		"rank": "Jack",
 		"value": 2,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/JS.png"
+		"spriteIndex": 40
 	},
 	{
-		"id": "10S2",
+		"id": "10S-2",
 		"suit": "Spades",
 		"rank": "10",
 		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/10S.png"
+		"spriteIndex": 39
 	},
 	{
-		"id": "9S2",
+		"id": "9S-2",
 		"suit": "Spades",
 		"rank": "9",
 		"value": 0,
-		"cardTexture": "res://Assets/Textures/Cards/Spades/9S.png"
-	},
-	{
-		"id": "Joker",
-		"suit": "Joker",
-		"rank": "Joker",
-		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Jokers/Joker4.png"
-	},
-	{
-		"id": "Joker2",
-		"suit": "Joker",
-		"rank": "Joker",
-		"value": 10,
-		"cardTexture": "res://Assets/Textures/Cards/Jokers/Joker4.png"
+		"spriteIndex": 38
 	}
 ]

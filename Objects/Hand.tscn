@@ -2,16 +2,5 @@
 
 [ext_resource type="Script" path="res://Scripts/Hand.gd" id="1_ovowu"]
 
-[node name="Hand" type="PanelContainer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_top = -0.0200195
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 8
-size_flags_stretch_ratio = 0.42
+[node name="Hand" type="Node2D"]
 script = ExtResource("1_ovowu")

@@ -35,7 +35,6 @@ func dealCards(amount:int, cardsOwner:String) -> void:
 		pass	
 
 	localDeck = localDeck.slice(amount - 1, localDeck.size()) 
-
 	SignalBus.emit_signal("giveCards", cardsOwner, cards)
 	pass
 
