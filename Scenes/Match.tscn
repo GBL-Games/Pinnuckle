@@ -1,25 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://rm0fl3gojt85"]
+[gd_scene load_steps=5 format=3 uid="uid://rm0fl3gojt85"]
 
-[ext_resource type="Script" path="res://Scripts/MatchManager.gd" id="1_slssc"]
-[ext_resource type="Script" path="res://Scripts/Hand.gd" id="3_0mnxw"]
-[ext_resource type="Script" path="res://Scripts/Deck.gd" id="3_xhwpw"]
-[ext_resource type="JSON" path="res://Assets/json/cards.json" id="4_tcbdg"]
+[ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
+[ext_resource type="PackedScene" uid="uid://bbv4m4bmhwulu" path="res://Objects/Hand.tscn" id="2_ix8jo"]
+[ext_resource type="Script" path="res://Scripts/Deck.cs" id="3_d8t6j"]
 [ext_resource type="Texture2D" uid="uid://buyilmj61fyql" path="res://Assets/Textures/Backs/CardBack4.png" id="5_dpavy"]
 
 [node name="Battle Scene" type="Node2D"]
-script = ExtResource("1_slssc")
+script = ExtResource("1_00w78")
 
 [node name="Hands" type="Node2D" parent="."]
 
-[node name="PlayerHand" type="Node2D" parent="Hands"]
-position = Vector2(261, 232)
-script = ExtResource("3_0mnxw")
-handOwner = "player"
+[node name="Hand" parent="Hands" instance=ExtResource("2_ix8jo")]
 
 [node name="Deck" type="Node2D" parent="."]
 position = Vector2(444, 232)
-script = ExtResource("3_xhwpw")
-cardData = ExtResource("4_tcbdg")
+script = ExtResource("3_d8t6j")
 
 [node name="CardBack4" type="Sprite2D" parent="Deck"]
 position = Vector2(0, -2)

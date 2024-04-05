@@ -12,12 +12,12 @@ config_version=5
 
 config/name="Pinnuckle"
 run/main_scene="res://Scenes/Match.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-SignalBus="*res://Scripts/SignalBus.gd"
+SignalBus="*res://Scripts/SignalBus.cs"
 
 [display]
 
@@ -26,6 +26,10 @@ window/size/viewport_height=270
 window/size/window_width_override=1020
 window/size/window_height_override=768
 window/stretch/mode="canvas_items"
+
+[dotnet]
+
+project/assembly_name="Pinnuckle"
 
 [input]
 
