@@ -1,76 +1,60 @@
-using System.Linq;
 using Godot;
 using Godot.Collections;
-using Godot.NativeInterop;
-using System.Collections.Generic;
-using System.Text.Json.Nodes;
-using System.Text.Json;
-using System.IO;
+using Newtonsoft.Json;
+using System;
+
 
 public partial class Deck : Node2D
 {
-	private List<CardObject> _localDeck = [];
+	private Array<CardObject> _localDeck = [];
 	private SignalBus _signalBus;
 
 	public Array<CardObject> ShuffledDeck = [];
+
+	static Random rand = new Random();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_signalBus = GetNode<SignalBus>("/root/SignalBus");
-
-		GD.Print(LoadJsonFromFile("res://Assets/json/", "cards.json"));
-
-		// _localDeck = (List<CardObject>)CardData.Data;
+		_localDeck = LoadCardData();
+		ShuffledDeck = _localDeck;
 		_signalBus.ShuffleCards += ShuffleCards;
-		// _signalBus.DealCards += DealCards;
+		_signalBus.DealCards += DealCards;
 	}
 
+	// Uses the FisherYates algorithm to shuffle.
 	private void ShuffleCards()
 	{
-		GD.Print("Shuffling cards!");
-		Array<CardObject> shuffledCards = [];
-
-		// if (CardData != null)
-		// {
-		// 	// ShuffledDeck = _localDeck;
-
-		// 	foreach (CardObject cardData in ShuffledDeck)
-		// 	{
-		// 		GD.PrintS(cardData);
-		// 		// GD.Print(cardData.Title());
-		// 	}
-		// }
-
-		// GD.Print(jsonParsed);
-		/* 		Dictionary cardDictionary = (Dictionary)Json.ParseString(jsonParsed);
-				GD.Print(cardDictionary.Count);
-				foreach (var cardData in cardDictionary)
-				{
-					CardObject cardObj = new CardObject();
-					shuffledCards.Append(cardObj);
-					GD.Print(cardData.ToString());
-				} */
+		for (int i = 0; i < ShuffledDeck.Count; i++)
+		{
+			int j = rand.Next(i + 1); ;
+			CardObject tempCard = ShuffledDeck[i];
+			ShuffledDeck[i] = ShuffledDeck[j];
+			ShuffledDeck[j] = tempCard;
+		}
 	}
 
-	private string LoadJsonFromFile(string path, string fileName)
+
+	private void DealCards(int amount, string cardsOwner)
 	{
-		string data;
+		Array<CardObject> cards = ShuffledDeck[..amount];
+		ShuffledDeck = ShuffledDeck.Slice(amount, ShuffledDeck.Count);
+		GD.Print(cards.Count);
+		GD.Print(ShuffledDeck.Count);
+	}
 
-		path = Path.Join(path, fileName);
+	private void ResetShuffleDeck()
+	{
+		ShuffledDeck = _localDeck;
+		ShuffleCards();
+	}
 
-		if (!File.Exists(path)) return null;
-
-		try
-		{
-			data = File.ReadAllText(path);
-		}
-		catch (System.Exception e)
-		{
-			GD.PrintErr(e);
-			throw;
-		}
-
-		return data;
+	private Array<CardObject> LoadCardData()
+	{
+		string file = FileAccess.Open("res://Assets/json/cards.json", FileAccess.ModeFlags.Read).GetAsText();
+		return JsonConvert.DeserializeObject<Array<CardObject>>(file);
 	}
 }
+
+
