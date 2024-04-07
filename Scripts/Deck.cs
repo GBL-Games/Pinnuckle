@@ -16,9 +16,15 @@ public partial class Deck : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_signalBus = GetNode<SignalBus>("/root/SignalBus");
 		_localDeck = LoadCardData();
 		ShuffledDeck = _localDeck;
+
+		ConnectSignals();
+	}
+
+	private void ConnectSignals()
+	{
+		_signalBus = GetNode<SignalBus>("/root/SignalBus");
 		_signalBus.ShuffleCards += ShuffleCards;
 		_signalBus.DealCards += DealCards;
 	}
@@ -35,13 +41,12 @@ public partial class Deck : Node2D
 		}
 	}
 
-
 	private void DealCards(int amount, string cardsOwner)
 	{
 		Array<CardObject> cards = ShuffledDeck[..amount];
 		ShuffledDeck = ShuffledDeck.Slice(amount, ShuffledDeck.Count);
-		GD.Print(cards.Count);
-		GD.Print(ShuffledDeck.Count);
+
+		_signalBus.EmitSignal("GiveCards", cardsOwner, cards);
 	}
 
 	private void ResetShuffleDeck()

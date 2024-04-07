@@ -1,6 +1,5 @@
-using System;
-using System.Runtime;
 using Godot;
+using Godot.Collections;
 
 public partial class SignalBus : Node
 {
@@ -8,7 +7,7 @@ public partial class SignalBus : Node
   [Signal]
   public delegate void DealCardsEventHandler(int amount, string owner);
   [Signal]
-  public delegate void GiveCardsEventHandler(string owner, CardObject[] cards);
+  public delegate void GiveCardsEventHandler(string owner, Array<CardObject> cards);
   [Signal]
   public delegate void ShuffleCardsEventHandler();
 }
