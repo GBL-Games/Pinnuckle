@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://rm0fl3gojt85"]
+[gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
 
 [ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
 [ext_resource type="PackedScene" uid="uid://bbv4m4bmhwulu" path="res://Objects/Hand.tscn" id="2_ix8jo"]
@@ -6,6 +6,10 @@
 [ext_resource type="Curve" uid="uid://c6axdux0x2i58" path="res://Resources/HandSpreadCurve.tres" id="3_uu87x"]
 [ext_resource type="Curve" uid="uid://bv80ochi4hmdv" path="res://Resources/HandHeightCurve.tres" id="4_abjid"]
 [ext_resource type="Texture2D" uid="uid://buyilmj61fyql" path="res://Assets/Textures/Backs/CardBack4.png" id="5_dpavy"]
+[ext_resource type="Script" path="res://Scripts/MeldsList.cs" id="7_m5j3q"]
+
+[sub_resource type="Theme" id="Theme_rsoi0"]
+default_font_size = 10
 
 [node name="Battle Scene" type="Node2D"]
 script = ExtResource("1_00w78")
@@ -13,10 +17,10 @@ script = ExtResource("1_00w78")
 [node name="Hands" type="Node2D" parent="."]
 
 [node name="Hand" parent="Hands" instance=ExtResource("2_ix8jo")]
-position = Vector2(244, 225)
+position = Vector2(244, 263)
 SpreadCurve = ExtResource("3_uu87x")
 HeightCurve = ExtResource("4_abjid")
-CardSpacing = 60.0
+CardSpacing = 100.0
 
 [node name="Deck" type="Node2D" parent="."]
 position = Vector2(444, 232)
@@ -25,3 +29,30 @@ script = ExtResource("3_d8t6j")
 [node name="CardBack4" type="Sprite2D" parent="Deck"]
 position = Vector2(0, -2)
 texture = ExtResource("5_dpavy")
+
+[node name="Melds" type="HBoxContainer" parent="."]
+layout_direction = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -471.0
+offset_top = 9.0
+offset_bottom = 269.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+script = ExtResource("7_m5j3q")
+
+[node name="MeldsList" type="VBoxContainer" parent="Melds"]
+y_sort_enabled = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Title" type="RichTextLabel" parent="Melds/MeldsList"]
+layout_mode = 2
+theme = SubResource("Theme_rsoi0")
+text = "Melds
+"
+fit_content = true
+autowrap_mode = 0
+shortcut_keys_enabled = false
+text_direction = 2

@@ -1,15 +1,21 @@
 using Godot;
 
-public partial class MatchManager : Node2D
+namespace Pinnuckle.Scripts
 {
-  private SignalBus _signalBus;
-  public override void _Ready()
-  {
-    _signalBus = GetNode<SignalBus>("/root/SignalBus");
+    public partial class MatchManager : Node2D
+    {
+        [Export] public string TrumpSuit;
 
-    GD.Print("Match Started!");
+        private SignalBus _signalBus;
 
-    _signalBus.EmitSignal("ShuffleCards");
-    _signalBus.EmitSignal("DealCards", 12, "player");
-  }
+        public override void _Ready()
+        {
+            _signalBus = GetNode<SignalBus>("/root/SignalBus");
+
+            GD.Print("Match Started!");
+
+            _signalBus.EmitSignal("ShuffleCards");
+            _signalBus.EmitSignal("DealCards", 12, "player");
+        }
+    }
 }

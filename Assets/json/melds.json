@@ -1,80 +1,267 @@
 [
   {
-    "id": "pinochle",
-    "name": "Pinochle",
-    "combination": "Q♠ J♦",
-    "value": 40
+	"id": "pinochle",
+	"name": "Pinochle",
+	"meldDisplay": "Q♠ J♦",
+	"cardCombinations": [
+	  {
+		"Rank": "Queen",
+		"Suit": "Spades",
+	  },
+	  {
+		"Rank": "Jack",
+		"Suit": "Diamonds",
+	  }
+	],
+	"value": 40
   },
   {
-    "id": "doublePinochle",
-    "name": "Double Pinochle",
-    "combination": "2x Q♠ J♦",
-    "value": 300
+	"id": "doublePinochle",
+	"name": "Double Pinochle",
+	"meldDisplay": "2x Q♠ J♦",
+	"cardCombinations": [
+	  {
+		"Rank": "Queen",
+		"Suit": "Spades",
+	  },
+	  {
+		"Rank": "Queen",
+		"Suit": "Spades",
+	  },
+	  {
+		"Rank": "Jack",
+		"Suit": "Diamonds",
+	  },
+	  {
+		"Rank": "Jack",
+		"Suit": "Diamonds",
+	  }
+	],
+	"value": 300
   },
   {
-    "id": "marriage",
-    "name": "Marriage",
-    "combination": "K Q",
-    "value": 20
+	"id": "marriage",
+	"name": "Marriage",
+	"meldDisplay": "K Q",
+	"cardCombinations": [
+	  {
+		"Rank": "King",
+	  },
+	  {
+		"Rank": "Queen",
+	  }
+	],
+	"value": 20
   },
   {
-    "id": "doubleMarriage",
-    "name": "Double Marriage",
-    "combination": "2x K Q",
-    "value": 40
+	"id": "doubleMarriage",
+	"name": "Double Marriage",
+	"meldDisplay": "2x K Q",
+	"cardCombinations": [
+	  {
+		"Rank": "King",
+	  },
+	  {
+		"Rank": "King",
+	  },
+	  {
+		"Rank": "Queen",
+	  },
+	  {
+		"Rank": "Queen",
+	  }
+	],
+	"value": 40
   },
   {
-    "id": "dix",
-    "name": "Dix",
-    "combination": "9",
-    "value": 10
+	"id": "dix",
+	"name": "Dix",
+	"meldDisplay": "9",
+	"cardCombinations": [
+	  {
+		"Rank": "9",
+	  }
+	],
+	"value": 10
   },
   {
-    "id": "doubleDix",
-    "name": "Double Dix",
-    "combination": "2x 9",
-    "value": 100
+	"id": "doubleDix",
+	"name": "Double Dix",
+	"meldDisplay": "2x 9",
+	"cardCombinations": [
+	  {
+		"Rank": "9",
+	  },
+	  {
+		"Rank": "9",
+	  }
+	],
+	"value": 100
   },
   {
-    "id": "fourAces",
-    "name": "Four Aces",
-    "combination": "A♠ A♦ A♥ A♣",
-    "value": 100
+	"id": "fourAces",
+	"name": "Four Aces",
+	"meldDisplay": "A♠ A♦ A♥ A♣",
+	"cardCombinations": [
+	  {
+		"Rank": "Ace",
+		"Suit": "Spades",
+	  },
+	  {
+		"Rank": "Ace",
+		"Suit": "Diamonds",
+	  },
+	  {
+		"Rank": "Ace",
+		"Suit": "Hearts",
+	  },
+	  {
+		"Rank": "Ace",
+		"Suit": "Clubs",
+	  }
+	],
+	"value": 100
   },
   {
-    "id": "fourKings",
-    "name": "Four Kings",
-    "combination": "K♠ K♦ K♥ K♣",
-    "value": 80
+	"id": "fourKings",
+	"name": "Four Kings",
+	"meldDisplay": "K♠ K♦ K♥ K♣",
+	"cardCombinations": [
+	  {
+		"Rank": "King",
+		"Suit": "Spades"
+	  },
+	  {
+		"Rank": "King",
+		"Suit": "Diamonds"
+	  },
+	  {
+		"Rank": "King",
+		"Suit": "Hearts"
+	  },
+	  {
+		"Rank": "King",
+		"Suit": "Clubs"
+	  }
+	],
+	"value": 80
   },
   {
-    "id": "fourQueens",
-    "name": "Four Queens",
-    "combination": "Q♠ Q♦ Q♥ Q♣",
-    "value": 60
+	"id": "fourQueens",
+	"name": "Four Queens",
+	"meldDisplay": "Q♠ Q♦ Q♥ Q♣",
+	"cardCombinations": [
+	  {
+		"Rank": "Queen",
+		"Suit": "Spades"
+	  },
+	  {
+		"Rank": "Queen",
+		"Suit": "Diamonds"
+	  },
+	  {
+		"Rank": "Queen",
+		"Suit": "Hearts"
+	  },
+	  {
+		"Rank": "Queen",
+		"Suit": "Clubs"
+	  }
+	],
+	"value": 60
   },
   {
-    "id": "fourJacks",
-    "name": "Four Jacks",
-    "combination": "J♠ J♦ J♥ J♣",
-    "value": 40
+	"id": "fourJacks",
+	"name": "Four Jacks",
+	"meldDisplay": "J♠ J♦ J♥ J♣",
+	"cardCombinations": [
+	  {
+		"Rank": "Jack",
+		"Suit": "Spades"
+	  },
+	  {
+		"Rank": "Jack",
+		"Suit": "Diamonds"
+	  },
+	  {
+		"Rank": "Jack",
+		"Suit": "Hearts"
+	  },
+	  {
+		"Rank": "Jack",
+		"Suit": "Clubs"
+	  }
+	],
+	"value": 40
   },
   {
-    "id": "fourTen",
-    "name": "Four Tens",
-    "combination": "10♠ 10♦ 10♥ 10♣",
-    "value": 40
+	"id": "fourTen",
+	"name": "Four Tens",
+	"meldDisplay": "10♠ 10♦ 10♥ 10♣",
+	"cardCombinations": [
+	  {
+		"Rank": "10",
+		"Suit": "Spades"
+	  },
+	  {
+		"Rank": "10",
+		"Suit": "Diamonds"
+	  },
+	  {
+		"Rank": "10",
+		"Suit": "Hearts"
+	  },
+	  {
+		"Rank": "10",
+		"Suit": "Clubs"
+	  }
+	],
+	"value": 40
   },
   {
-    "id": "sequence",
-    "name": "Sequence",
-    "combination": "A 10 K Q J",
-    "value": 150
+	"id": "sequence",
+	"name": "Sequence",
+	"meldDisplay": "A 10 K Q J",
+	"cardCombinations": [
+	  {
+		"Rank": "Ace"
+	  },
+	  {
+		"Rank": "10"
+	  },
+	  {
+		"Rank": "King"
+	  },
+	  {
+		"Rank": "Queen"
+	  },
+	  {
+		"Rank": "Jack"
+	  }
+	],
+	"value": 150
   },
   {
-    "id": "flush",
-    "name": "Flush",
-    "combination": "A K Q J 10 in same suit",
-    "value": 150
+	"id": "flush",
+	"name": "Flush",
+	"meldDisplay": "A K Q J 10 in same suit",
+	"cardCombinations": [
+	  {
+		"Rank": "Ace"
+	  },
+	  {
+		"Rank": "King"
+	  },
+	  {
+		"Rank": "Queen"
+	  },
+	  {
+		"Rank": "Jack"
+	  },
+	  {
+		"Rank": "10"
+	  }
+	],
+	"value": 150
   }
 ]

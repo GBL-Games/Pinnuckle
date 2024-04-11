@@ -3,63 +3,70 @@ using Godot.Collections;
 using Newtonsoft.Json;
 using System;
 
-
-public partial class Deck : Node2D
+namespace Pinnuckle.Scripts
 {
-	private Array<CardObject> _localDeck = [];
-	private SignalBus _signalBus;
+    public partial class Deck : Node2D
+    {
+        private Array<CardData> _localDeck;
+        private SignalBus _signalBus;
 
-	public Array<CardObject> ShuffledDeck = [];
+        public Array<CardData> ShuffledDeck;
 
-	static Random rand = new Random();
+        static readonly Random rand = new Random();
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		_localDeck = LoadCardData();
-		ShuffledDeck = _localDeck;
+        // Called when the node enters the scene tree for the first time.
+        public override void _Ready()
+        {
+            GenerateDeck();
+            ShuffledDeck = _localDeck;
 
-		ConnectSignals();
-	}
+            GD.Print(ShuffledDeck.Count);
 
-	private void ConnectSignals()
-	{
-		_signalBus = GetNode<SignalBus>("/root/SignalBus");
-		_signalBus.ShuffleCards += ShuffleCards;
-		_signalBus.DealCards += DealCards;
-	}
+            ConnectSignals();
+        }
 
-	// Uses the FisherYates algorithm to shuffle.
-	private void ShuffleCards()
-	{
-		for (int i = 0; i < ShuffledDeck.Count; i++)
-		{
-			int j = rand.Next(i + 1); ;
-			CardObject tempCard = ShuffledDeck[i];
-			ShuffledDeck[i] = ShuffledDeck[j];
-			ShuffledDeck[j] = tempCard;
-		}
-	}
+        private void GenerateDeck()
+        {
+            _localDeck = LoadCardData();
+        }
 
-	private void DealCards(int amount, string cardsOwner)
-	{
-		Array<CardObject> cards = ShuffledDeck[..amount];
-		ShuffledDeck = ShuffledDeck.Slice(amount, ShuffledDeck.Count);
+        private void ConnectSignals()
+        {
+            _signalBus = GetNode<SignalBus>("/root/SignalBus");
+            _signalBus.ShuffleCards += ShuffleCards;
+            _signalBus.DealCards += DealCards;
+        }
 
-		_signalBus.EmitSignal("GiveCards", cardsOwner, cards);
-	}
+        // Uses the FisherYates algorithm to shuffle.
+        private void ShuffleCards()
+        {
+            for (int i = 0; i < ShuffledDeck.Count; i++)
+            {
+                int j = rand.Next(i + 1);
+                CardData tempCard = ShuffledDeck[i];
+                ShuffledDeck[i] = ShuffledDeck[j];
+                ShuffledDeck[j] = tempCard;
+            }
+        }
 
-	private void ResetShuffleDeck()
-	{
-		ShuffledDeck = _localDeck;
-		ShuffleCards();
-	}
+        private void DealCards(int amount, string cardsOwner)
+        {
+            Array<CardData> cards = ShuffledDeck[..amount];
+            ShuffledDeck = ShuffledDeck.Slice(amount, ShuffledDeck.Count);
 
-	private Array<CardObject> LoadCardData()
-	{
-		string file = FileAccess.Open("res://Assets/json/cards.json", FileAccess.ModeFlags.Read).GetAsText();
-		return JsonConvert.DeserializeObject<Array<CardObject>>(file);
-	}
+            _signalBus.EmitSignal("GiveCards", cardsOwner, cards);
+        }
+
+        private void ResetShuffleDeck()
+        {
+            ShuffledDeck = _localDeck;
+            ShuffleCards();
+        }
+
+        private Array<CardData> LoadCardData()
+        {
+            string file = FileAccess.Open("res://Assets/json/cards.json", FileAccess.ModeFlags.Read).GetAsText();
+            return JsonConvert.DeserializeObject<Array<CardData>>(file);
+        }
+    }
 }
-
-

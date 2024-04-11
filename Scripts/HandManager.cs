@@ -1,76 +1,147 @@
 using Godot;
 using Godot.Collections;
-using System.Linq;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
-public partial class HandManager : Node2D
+namespace Pinnuckle.Scripts
 {
-	private SignalBus _signalBus;
-	private Array<CardObject> _currentHand = [];
+    public partial class HandManager : Node2D
+    {
+        private SignalBus _signalBus;
+        private Array<CardData> _currentHand = [];
 
-	private PackedScene _card = GD.Load<PackedScene>("res://Objects/Card.tscn");
+        private PackedScene _card = GD.Load<PackedScene>("res://Objects/Card.tscn");
 
-	[Export]
-	public Curve SpreadCurve;
-	[Export]
-	public Curve HeightCurve;
-	[Export]
-	public float CardSpacing;
+        [Export] public Curve SpreadCurve;
+        [Export] public Curve HeightCurve;
+        [Export] public float CardSpacing;
 
-	[Export]
-	public string HandOwner = "player";
+        [Export] public string HandOwner = "player";
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		_signalBus = GetNode<SignalBus>("/root/SignalBus");
-		_signalBus.GiveCards += AddToHand;
-	}
+        private Array<MeldData> _handMelds;
+        private Array<MeldData> _allMelds;
 
-	private void AddToHand(string owner, Array<CardObject> cards)
-	{
-		if (owner == HandOwner)
-		{
-			_currentHand.AddRange(cards);
-			UpdateHand();
-		}
-	}
+        // Called when the node enters the scene tree for the first time.
+        public override void _Ready()
+        {
+            _allMelds = LoadMelds();
 
-	private void UpdateHand()
-	{
-		GD.Print(CardSpacing);
-		int totalCards = _currentHand.Count;
+            _signalBus = GetNode<SignalBus>("/root/SignalBus");
+            _signalBus.GiveCards += AddToHand;
+        }
 
-		for (int i = 0; i < totalCards; i++)
-		{
-			Vector2 destination = Position;
-			float tangentAngle;
+        private void AddToHand(string owner, Array<CardData> cards)
+        {
+            if (owner == HandOwner)
+            {
+                _currentHand.AddRange(cards);
+                UpdateHand();
+            }
+        }
 
-			float handPositionRatio;
-			float handRotationRatio;
+        private void UpdateHand()
+        {
+            int totalCards = _currentHand.Count;
 
-			handPositionRatio = (float)i / (float)(totalCards - 1);
-			handRotationRatio = (float)i / (float)totalCards;
-			destination.X = SpreadCurve.Sample(handPositionRatio) * CardSpacing;
-			destination.Y = HeightCurve.Sample(handPositionRatio) * -15f;
+            for (int i = 0; i < totalCards; i++)
+            {
+                Vector2 destination = Position;
 
-			float deltaX = SpreadCurve.Sample(handPositionRatio + 0.01f) * CardSpacing - destination.X;
-			float deltaY = HeightCurve.Sample(handPositionRatio + 0.01f) * -15f - destination.Y;
+                float handPositionRatio = (float)i / (float)(totalCards - 1);
+                destination.X = SpreadCurve.Sample(handPositionRatio) * CardSpacing;
+                destination.Y = 0;
 
-			tangentAngle = Mathf.Atan2(deltaY, deltaX);
+                Card cardInstance = (Card)_card.Instantiate();
+                cardInstance.Position = destination;
+                cardInstance.CardInfo = _currentHand[i];
 
-			if (totalCards == 1)
-			{
-				tangentAngle = 0f;
-			}
+                AddChild(cardInstance);
+            }
 
-			Node2D cardInstance = (Node2D)_card.Instantiate();
-			cardInstance.Position = destination;
-			cardInstance.Rotation = tangentAngle;
+            _handMelds = GetHandMelds();
+            _signalBus.EmitSignal("MeldListUpdate", _handMelds);
+        }
 
+        private Array<MeldData> GetHandMelds()
+        {
+            Array<MeldData> madeMelds = new Array<MeldData>();
 
-			GD.PrintT(_currentHand[i].Title(), tangentAngle);
+            foreach (MeldData meldData in _allMelds)
+            {
+                bool isValidMeld = true;
 
-			AddChild(cardInstance);
-		}
-	}
+                Godot.Collections.Dictionary<string, int> comboFrequency =
+                    new Godot.Collections.Dictionary<string, int>();
+
+                foreach (CardCombination cardCombination in meldData.CardCombinations)
+                {
+                    string key = $"{cardCombination.Rank}-{cardCombination.Suit}";
+
+                    if (comboFrequency.ContainsKey(key))
+                    {
+                        comboFrequency[key]++;
+                    }
+                    else
+                    {
+                        comboFrequency[key] = 1;
+                    }
+
+                    bool cardFound = false;
+                    string comboRank = cardCombination.Rank;
+                    string comboSuit = cardCombination.Suit;
+
+                    foreach (CardData cardData in _currentHand)
+                    {
+                        if (cardData.Rank == comboRank && (comboSuit == null || cardData.Suit == comboSuit))
+                        {
+                            cardFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!cardFound)
+                    {
+                        isValidMeld = false;
+                        break;
+                    }
+                }
+
+                foreach (KeyValuePair<string, int> pair in comboFrequency)
+                {
+                    int requiredFrequency = pair.Value;
+                    int foundFrequency = 0;
+
+                    foreach (CardData card in _currentHand)
+                    {
+                        string rank = pair.Key.Split('-')[0];
+                        string suit = pair.Key.Split('-')[1];
+
+                        if (card.Rank == rank && (suit == "" || card.Suit == suit))
+                        {
+                            foundFrequency++;
+                        }
+                    }
+
+                    if (foundFrequency < requiredFrequency)
+                    {
+                        isValidMeld = false;
+                        break;
+                    }
+                }
+
+                if (isValidMeld)
+                {
+                    madeMelds.Add(meldData);
+                }
+            }
+
+            return madeMelds;
+        }
+
+        private static Array<MeldData> LoadMelds()
+        {
+            string file = FileAccess.Open("res://Assets/json/melds.json", FileAccess.ModeFlags.Read).GetAsText();
+            return JsonConvert.DeserializeObject<Array<MeldData>>(file);
+        }
+    }
 }

@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckt8u405getih"]
+[gd_scene load_steps=3 format=3 uid="uid://cpw0gky5dgbv1"]
 
-[ext_resource type="Script" path="res://Scripts/Card.gd" id="1_183im"]
 [ext_resource type="Texture2D" uid="uid://dwaj13af7ef6d" path="res://Assets/pixelCards/CuteCardsPixel_outline.png" id="2_qnskc"]
+[ext_resource type="Script" path="res://Scripts/Card.cs" id="2_rxaxh"]
 
 [node name="Card" type="Sprite2D"]
 texture = ExtResource("2_qnskc")
 hframes = 15
 vframes = 4
-script = ExtResource("1_183im")
+script = ExtResource("2_rxaxh")
