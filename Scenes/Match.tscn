@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
+[gd_scene load_steps=10 format=3 uid="uid://rm0fl3gojt85"]
 
 [ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
 [ext_resource type="PackedScene" uid="uid://bbv4m4bmhwulu" path="res://Objects/Hand.tscn" id="2_ix8jo"]
@@ -7,6 +7,7 @@
 [ext_resource type="Curve" uid="uid://bv80ochi4hmdv" path="res://Resources/HandHeightCurve.tres" id="4_abjid"]
 [ext_resource type="Texture2D" uid="uid://buyilmj61fyql" path="res://Assets/Textures/Backs/CardBack4.png" id="5_dpavy"]
 [ext_resource type="Script" path="res://Scripts/MeldsList.cs" id="7_m5j3q"]
+[ext_resource type="Theme" uid="uid://c7j54ylk2661n" path="res://Resources/PinnuckleTheme.tres" id="8_7tyvh"]
 
 [sub_resource type="Theme" id="Theme_rsoi0"]
 default_font_size = 10
@@ -30,24 +31,40 @@ script = ExtResource("3_d8t6j")
 position = Vector2(0, -2)
 texture = ExtResource("5_dpavy")
 
-[node name="Melds" type="HBoxContainer" parent="."]
+[node name="Match UI" type="HBoxContainer" parent="."]
 layout_direction = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -471.0
 offset_top = 9.0
-offset_bottom = 269.0
+offset_bottom = 203.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 script = ExtResource("7_m5j3q")
 
-[node name="MeldsList" type="VBoxContainer" parent="Melds"]
+[node name="MeldsList" type="VBoxContainer" parent="Match UI"]
 y_sort_enabled = true
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="Title" type="RichTextLabel" parent="Melds/MeldsList"]
+[node name="Hand Damage" type="RichTextLabel" parent="Match UI/MeldsList"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = " Hand Damage"
+fit_content = true
+autowrap_mode = 0
+text_direction = 2
+
+[node name="TrumpSuit" type="RichTextLabel" parent="Match UI/MeldsList"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = " Trump Suit"
+fit_content = true
+autowrap_mode = 0
+text_direction = 2
+
+[node name="Title" type="RichTextLabel" parent="Match UI/MeldsList"]
 layout_mode = 2
 theme = SubResource("Theme_rsoi0")
 text = "Melds

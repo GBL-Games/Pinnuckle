@@ -17,7 +17,7 @@ namespace Pinnuckle.Scripts
 
         private void UpdateMeldList(Array<MeldData> meldItems)
         {
-            GetNode<RichTextLabel>("MeldsList/Title").Text = "Melds: " + meldItems.Count.ToString();
+            GetNode<RichTextLabel>("MeldsList/Title").Text = "Player Melds: " + meldItems.Count.ToString();
             foreach (MeldData meldData in meldItems)
             {
                 MeldListItem meldListItem = new MeldListItem();

@@ -12,5 +12,6 @@ public partial class MeldData : GodotObject
     private string Id { get; set; }
     public string Name { get; set; }
     public string MeldDisplay { get; set; }
+    public int Value { get; set; }
     public Array<CardCombination> CardCombinations { get; set; }
 }
