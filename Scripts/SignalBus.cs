@@ -34,6 +34,6 @@ namespace Pinnuckle.Scripts
 
         // UI Signals
         [Signal]
-        public delegate void MeldListUpdateEventHandler(Array<MeldData> meldData);
+        public delegate void MeldListUpdateEventHandler(string owner, Array<MeldData> meldData);
     }
 }

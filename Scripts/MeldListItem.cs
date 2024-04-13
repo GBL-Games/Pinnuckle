@@ -5,6 +5,7 @@ namespace Pinnuckle.Scripts
     public partial class MeldListItem : RichTextLabel
     {
         [Export] public MeldData MeldListItemData;
+        [Export] public string MeldListOwner;
 
         private Theme _theme = GD.Load<Theme>("res://Resources/PinnuckleTheme.tres");
 
@@ -17,7 +18,7 @@ namespace Pinnuckle.Scripts
             AutowrapMode = TextServer.AutowrapMode.Off;
             FitContent = true;
             Text = MeldListItemData.Name;
-            TextDirection = TextDirection.Rtl;
+            TextDirection = MeldListOwner == "player" ? TextDirection.Ltr : TextDirection.Rtl;
         }
     }
 }

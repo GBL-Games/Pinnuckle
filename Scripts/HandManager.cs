@@ -54,12 +54,13 @@ namespace Pinnuckle.Scripts
                 Card cardInstance = (Card)_card.Instantiate();
                 cardInstance.Position = destination;
                 cardInstance.CardInfo = _currentHand[i];
+                cardInstance.CardOwner = HandOwner;
 
                 AddChild(cardInstance);
             }
 
             _handMelds = GetHandMelds();
-            _signalBus.EmitSignal("MeldListUpdate", _handMelds);
+            _signalBus.EmitSignal("MeldListUpdate", HandOwner, _handMelds);
         }
 
         private Array<MeldData> GetHandMelds()

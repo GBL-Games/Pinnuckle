@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://rm0fl3gojt85"]
+[gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
 
 [ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
 [ext_resource type="PackedScene" uid="uid://bbv4m4bmhwulu" path="res://Objects/Hand.tscn" id="2_ix8jo"]
@@ -9,19 +9,23 @@
 [ext_resource type="Script" path="res://Scripts/MeldsList.cs" id="7_m5j3q"]
 [ext_resource type="Theme" uid="uid://c7j54ylk2661n" path="res://Resources/PinnuckleTheme.tres" id="8_7tyvh"]
 
-[sub_resource type="Theme" id="Theme_rsoi0"]
-default_font_size = 10
-
 [node name="Battle Scene" type="Node2D"]
 script = ExtResource("1_00w78")
 
 [node name="Hands" type="Node2D" parent="."]
 
-[node name="Hand" parent="Hands" instance=ExtResource("2_ix8jo")]
+[node name="Player" parent="Hands" instance=ExtResource("2_ix8jo")]
 position = Vector2(244, 263)
 SpreadCurve = ExtResource("3_uu87x")
 HeightCurve = ExtResource("4_abjid")
 CardSpacing = 100.0
+
+[node name="Opponent" parent="Hands" instance=ExtResource("2_ix8jo")]
+position = Vector2(244, 6)
+SpreadCurve = ExtResource("3_uu87x")
+HeightCurve = ExtResource("4_abjid")
+CardSpacing = 70.0
+HandOwner = "opponent"
 
 [node name="Deck" type="Node2D" parent="."]
 position = Vector2(444, 232)
@@ -32,23 +36,76 @@ position = Vector2(0, -2)
 texture = ExtResource("5_dpavy")
 
 [node name="Match UI" type="HBoxContainer" parent="."]
-layout_direction = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -471.0
-offset_top = 9.0
-offset_bottom = 203.0
+offset_right = 480.0
+offset_bottom = 270.0
 grow_horizontal = 0
-size_flags_horizontal = 8
+size_flags_horizontal = 3
 script = ExtResource("7_m5j3q")
+metadata/_edit_lock_ = true
 
-[node name="MeldsList" type="VBoxContainer" parent="Match UI"]
+[node name="UI Right" type="VBoxContainer" parent="Match UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerMeldsList" type="VBoxContainer" parent="Match UI/UI Right"]
+y_sort_enabled = true
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("8_7tyvh")
+
+[node name="Owner" type="RichTextLabel" parent="Match UI/UI Right/PlayerMeldsList"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = "You"
+fit_content = true
+autowrap_mode = 0
+text_direction = 1
+
+[node name="Hand Damage" type="RichTextLabel" parent="Match UI/UI Right/PlayerMeldsList"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = "Hand Damage"
+fit_content = true
+autowrap_mode = 0
+text_direction = 1
+
+[node name="Title" type="RichTextLabel" parent="Match UI/UI Right/PlayerMeldsList"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = "Melds
+"
+fit_content = true
+autowrap_mode = 0
+shortcut_keys_enabled = false
+text_direction = 1
+
+[node name="TrumpSuit" type="RichTextLabel" parent="Match UI/UI Right"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = "Trump Suit"
+fit_content = true
+autowrap_mode = 0
+text_direction = 1
+
+[node name="OpponentMeldsList" type="VBoxContainer" parent="Match UI"]
 y_sort_enabled = true
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 3
 
-[node name="Hand Damage" type="RichTextLabel" parent="Match UI/MeldsList"]
+[node name="Owner" type="RichTextLabel" parent="Match UI/OpponentMeldsList"]
+layout_mode = 2
+theme = ExtResource("8_7tyvh")
+text = "Them"
+fit_content = true
+autowrap_mode = 0
+text_direction = 2
+
+[node name="Hand Damage" type="RichTextLabel" parent="Match UI/OpponentMeldsList"]
 layout_mode = 2
 theme = ExtResource("8_7tyvh")
 text = " Hand Damage"
@@ -56,17 +113,9 @@ fit_content = true
 autowrap_mode = 0
 text_direction = 2
 
-[node name="TrumpSuit" type="RichTextLabel" parent="Match UI/MeldsList"]
+[node name="Title" type="RichTextLabel" parent="Match UI/OpponentMeldsList"]
 layout_mode = 2
 theme = ExtResource("8_7tyvh")
-text = " Trump Suit"
-fit_content = true
-autowrap_mode = 0
-text_direction = 2
-
-[node name="Title" type="RichTextLabel" parent="Match UI/MeldsList"]
-layout_mode = 2
-theme = SubResource("Theme_rsoi0")
 text = "Melds
 "
 fit_content = true

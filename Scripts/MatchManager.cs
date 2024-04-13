@@ -21,29 +21,34 @@ namespace Pinnuckle.Scripts
 
             GD.Print("Match Started!");
             _signalBus = GetNode<SignalBus>("/root/SignalBus");
-            _signalBus.MeldListUpdate += CalculatePlayerDamage;
+            _signalBus.MeldListUpdate += CalculateDamage;
             _signalBus.EmitSignal("ShuffleCards");
             _signalBus.EmitSignal("DealCards", 12, "player");
+            _signalBus.EmitSignal("DealCards", 12, "opponent");
 
             SetTrumpSuit();
         }
 
-        private void CalculatePlayerDamage(Array<MeldData> meldList)
+        private void CalculateDamage(string listOwner, Array<MeldData> meldList)
         {
+            GD.PrintT("Calcing DMG: ", listOwner);
             TotalPlayerDmg = meldList.Aggregate(0, (acc, cur) => acc + cur.Value);
-            UpdatePlayerDamageText();
+            NodePath path = listOwner == "player"
+                ? "Match UI/UI Right/PlayerMeldsList/Hand Damage"
+                : "Match UI/OpponentMeldsList/Hand Damage";
+            UpdatePlayerDamageText(path);
         }
 
-        private void UpdatePlayerDamageText()
+        private void UpdatePlayerDamageText(NodePath path)
         {
-            GetNode<RichTextLabel>("Match UI/MeldsList/Hand Damage").Text =
-                "Total Player Damage: " + TotalPlayerDmg.ToString();
+            GetNode<RichTextLabel>(path).Text =
+                "Total Damage: " + TotalPlayerDmg.ToString();
         }
 
         private void SetTrumpSuit()
         {
             TrumpSuit = _suits[_random.Next(0, 3)];
-            GetNode<RichTextLabel>("Match UI/MeldsList/TrumpSuit").Text = "Trump Suit: " + TrumpSuit;
+            GetNode<RichTextLabel>("Match UI/UI Right/TrumpSuit").Text = "Trump Suit: " + TrumpSuit;
         }
     }
 }

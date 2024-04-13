@@ -7,4 +7,5 @@
 texture = ExtResource("2_qnskc")
 hframes = 15
 vframes = 4
+frame = 59
 script = ExtResource("2_rxaxh")
