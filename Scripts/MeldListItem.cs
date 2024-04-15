@@ -16,6 +16,7 @@ namespace Pinnuckle.Scripts
             Theme = _theme;
 
             AutowrapMode = TextServer.AutowrapMode.Off;
+            MouseFilter = MouseFilterEnum.Ignore;
             FitContent = true;
             Text = MeldListItemData.Name;
             TextDirection = MeldListOwner == "player" ? TextDirection.Ltr : TextDirection.Rtl;

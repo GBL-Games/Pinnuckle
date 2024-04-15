@@ -3,9 +3,16 @@
 [ext_resource type="Texture2D" uid="uid://dwaj13af7ef6d" path="res://Assets/pixelCards/CuteCardsPixel_outline.png" id="2_qnskc"]
 [ext_resource type="Script" path="res://Scripts/Card.cs" id="2_rxaxh"]
 
-[node name="Card" type="Sprite2D"]
+[node name="Card" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+script = ExtResource("2_rxaxh")
+
+[node name="Card Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_qnskc")
 hframes = 15
 vframes = 4
-frame = 59
-script = ExtResource("2_rxaxh")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

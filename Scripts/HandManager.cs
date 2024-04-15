@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Pinnuckle.Scripts
 {
-    public partial class HandManager : Node2D
+    public partial class HandManager : Container
     {
         private SignalBus _signalBus;
         private Array<CardData> _currentHand = [];

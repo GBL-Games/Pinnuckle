@@ -19,6 +19,9 @@ namespace Pinnuckle.Scripts
         [Signal]
         public delegate void DisplayMeldsEventHandler(string owner, Array<MeldData> melds);
 
+        [Signal]
+        public delegate void CardSelectedEventHandler(int cardIndex);
+
         // Player signals
         [Signal]
         public delegate void PlayerActionEventHandler(string action);

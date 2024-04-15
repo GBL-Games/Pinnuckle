@@ -31,7 +31,6 @@ namespace Pinnuckle.Scripts
 
         private void CalculateDamage(string listOwner, Array<MeldData> meldList)
         {
-            GD.PrintT("Calcing DMG: ", listOwner);
             TotalPlayerDmg = meldList.Aggregate(0, (acc, cur) => acc + cur.Value);
             NodePath path = listOwner == "player"
                 ? "Match UI/UI Right/PlayerMeldsList/Hand Damage"

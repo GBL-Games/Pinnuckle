@@ -1,31 +1,16 @@
 [gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
 
 [ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
-[ext_resource type="PackedScene" uid="uid://bbv4m4bmhwulu" path="res://Objects/Hand.tscn" id="2_ix8jo"]
 [ext_resource type="Script" path="res://Scripts/Deck.cs" id="3_d8t6j"]
 [ext_resource type="Curve" uid="uid://c6axdux0x2i58" path="res://Resources/HandSpreadCurve.tres" id="3_uu87x"]
 [ext_resource type="Curve" uid="uid://bv80ochi4hmdv" path="res://Resources/HandHeightCurve.tres" id="4_abjid"]
 [ext_resource type="Texture2D" uid="uid://buyilmj61fyql" path="res://Assets/Textures/Backs/CardBack4.png" id="5_dpavy"]
+[ext_resource type="Script" path="res://Scripts/HandManager.cs" id="6_627g5"]
 [ext_resource type="Script" path="res://Scripts/MeldsList.cs" id="7_m5j3q"]
 [ext_resource type="Theme" uid="uid://c7j54ylk2661n" path="res://Resources/PinnuckleTheme.tres" id="8_7tyvh"]
 
 [node name="Battle Scene" type="Node2D"]
 script = ExtResource("1_00w78")
-
-[node name="Hands" type="Node2D" parent="."]
-
-[node name="Player" parent="Hands" instance=ExtResource("2_ix8jo")]
-position = Vector2(244, 263)
-SpreadCurve = ExtResource("3_uu87x")
-HeightCurve = ExtResource("4_abjid")
-CardSpacing = 100.0
-
-[node name="Opponent" parent="Hands" instance=ExtResource("2_ix8jo")]
-position = Vector2(244, 6)
-SpreadCurve = ExtResource("3_uu87x")
-HeightCurve = ExtResource("4_abjid")
-CardSpacing = 70.0
-HandOwner = "opponent"
 
 [node name="Deck" type="Node2D" parent="."]
 position = Vector2(444, 232)
@@ -43,12 +28,15 @@ offset_right = 480.0
 offset_bottom = 270.0
 grow_horizontal = 0
 size_flags_horizontal = 3
+mouse_filter = 2
 script = ExtResource("7_m5j3q")
 metadata/_edit_lock_ = true
 
 [node name="UI Right" type="VBoxContainer" parent="Match UI"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="PlayerMeldsList" type="VBoxContainer" parent="Match UI/UI Right"]
 y_sort_enabled = true
@@ -56,10 +44,12 @@ layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 
 [node name="Owner" type="RichTextLabel" parent="Match UI/UI Right/PlayerMeldsList"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = "You"
 fit_content = true
@@ -68,6 +58,7 @@ text_direction = 1
 
 [node name="Hand Damage" type="RichTextLabel" parent="Match UI/UI Right/PlayerMeldsList"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = "Hand Damage"
 fit_content = true
@@ -76,6 +67,7 @@ text_direction = 1
 
 [node name="Title" type="RichTextLabel" parent="Match UI/UI Right/PlayerMeldsList"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = "Melds
 "
@@ -86,6 +78,7 @@ text_direction = 1
 
 [node name="TrumpSuit" type="RichTextLabel" parent="Match UI/UI Right"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = "Trump Suit"
 fit_content = true
@@ -96,9 +89,12 @@ text_direction = 1
 y_sort_enabled = true
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="Owner" type="RichTextLabel" parent="Match UI/OpponentMeldsList"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = "Them"
 fit_content = true
@@ -107,6 +103,7 @@ text_direction = 2
 
 [node name="Hand Damage" type="RichTextLabel" parent="Match UI/OpponentMeldsList"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = " Hand Damage"
 fit_content = true
@@ -115,6 +112,7 @@ text_direction = 2
 
 [node name="Title" type="RichTextLabel" parent="Match UI/OpponentMeldsList"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("8_7tyvh")
 text = "Melds
 "
@@ -122,3 +120,39 @@ fit_content = true
 autowrap_mode = 0
 shortcut_keys_enabled = false
 text_direction = 2
+
+[node name="Hands" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 480.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+alignment = 1
+
+[node name="Opponent" type="Container" parent="Hands"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("6_627g5")
+SpreadCurve = ExtResource("3_uu87x")
+HeightCurve = ExtResource("4_abjid")
+CardSpacing = 50.0
+HandOwner = "opponent"
+
+[node name="Player" type="Container" parent="Hands"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("6_627g5")
+SpreadCurve = ExtResource("3_uu87x")
+HeightCurve = ExtResource("4_abjid")
+CardSpacing = 100.0
