@@ -19,9 +19,6 @@ namespace Pinnuckle.Scripts
         {
             GenerateDeck();
             ShuffledDeck = _localDeck;
-
-            GD.Print(ShuffledDeck.Count);
-
             ConnectSignals();
         }
 

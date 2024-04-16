@@ -5,12 +5,10 @@ using Newtonsoft.Json;
 
 namespace Pinnuckle.Scripts
 {
-    public partial class HandManager : Container
+    public partial class HandManager : HBoxContainer
     {
         private SignalBus _signalBus;
         private Array<CardData> _currentHand = [];
-
-        private PackedScene _card = GD.Load<PackedScene>("res://Objects/Card.tscn");
 
         [Export] public Curve SpreadCurve;
         [Export] public Curve HeightCurve;
@@ -45,17 +43,9 @@ namespace Pinnuckle.Scripts
 
             for (int i = 0; i < totalCards; i++)
             {
-                Vector2 destination = Position;
-
-                float handPositionRatio = (float)i / (float)(totalCards - 1);
-                destination.X = SpreadCurve.Sample(handPositionRatio) * CardSpacing;
-                destination.Y = 0;
-
-                Card cardInstance = (Card)_card.Instantiate();
-                cardInstance.Position = destination;
+                Card cardInstance = new Card();
                 cardInstance.CardInfo = _currentHand[i];
                 cardInstance.CardOwner = HandOwner;
-
                 AddChild(cardInstance);
             }
 

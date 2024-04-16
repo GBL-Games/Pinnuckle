@@ -5,7 +5,7 @@ using Godot.Collections;
 
 namespace Pinnuckle.Scripts
 {
-    public partial class MatchManager : Node2D
+    public partial class MatchManager : Control
     {
         [Export] public string TrumpSuit;
         [Export] public int TotalPlayerDmg = 0;
