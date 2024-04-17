@@ -10,6 +10,8 @@ namespace Pinnuckle.Scripts
         private SignalBus _signalBus;
         private Array<CardData> _currentHand = [];
 
+        private PackedScene _card;
+
         [Export] public Curve SpreadCurve;
         [Export] public Curve HeightCurve;
         [Export] public float CardSpacing;
@@ -22,6 +24,7 @@ namespace Pinnuckle.Scripts
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            _card = ResourceLoader.Load<PackedScene>("res://Objects/Card.tscn");
             _allMelds = LoadMelds();
 
             _signalBus = GetNode<SignalBus>("/root/SignalBus");
@@ -43,9 +46,10 @@ namespace Pinnuckle.Scripts
 
             for (int i = 0; i < totalCards; i++)
             {
-                Card cardInstance = new Card();
+                Card cardInstance = (Card)_card.Instantiate();
                 cardInstance.CardInfo = _currentHand[i];
                 cardInstance.CardOwner = HandOwner;
+                cardInstance.CardIndex = i;
                 AddChild(cardInstance);
             }
 

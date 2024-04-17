@@ -14,6 +14,8 @@ namespace Pinnuckle.Scripts
         private SignalBus _signalBus;
         private string[] _suits = ["Spades", "Clubs", "Diamonds", "Hearts"];
 
+        private CardData _selectedPlayerCard;
+
 
         public override void _Ready()
         {
