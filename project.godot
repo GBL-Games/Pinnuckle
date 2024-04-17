@@ -21,8 +21,9 @@ SignalBus="*res://Scripts/SignalBus.cs"
 
 [display]
 
-window/size/viewport_width=256
-window/size/viewport_height=144
+window/size/viewport_width=420
+window/size/viewport_height=240
+window/size/mode=2
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"

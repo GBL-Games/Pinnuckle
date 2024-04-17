@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
+[gd_scene load_steps=11 format=3 uid="uid://rm0fl3gojt85"]
 
 [ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
 [ext_resource type="Script" path="res://Scripts/Deck.cs" id="3_d8t6j"]
@@ -8,6 +8,12 @@
 [ext_resource type="Script" path="res://Scripts/HandManager.cs" id="6_627g5"]
 [ext_resource type="Script" path="res://Scripts/MeldsList.cs" id="7_m5j3q"]
 [ext_resource type="Theme" uid="uid://c7j54ylk2661n" path="res://Resources/PinnuckleTheme.tres" id="8_7tyvh"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_c3gj0"]
+specular_color = Color(0.305882, 0.305882, 0.305882, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50rsy"]
+size = Vector2(160, 40)
 
 [node name="Battle Scene" type="Control"]
 layout_mode = 3
@@ -168,3 +174,24 @@ script = ExtResource("6_627g5")
 SpreadCurve = ExtResource("3_uu87x")
 HeightCurve = ExtResource("4_abjid")
 CardSpacing = 100.0
+
+[node name="Drop Zone" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -20.0
+offset_right = 80.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_c3gj0")
+
+[node name="Area2D" type="Area2D" parent="Drop Zone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drop Zone/Area2D"]
+position = Vector2(80, 20)
+shape = SubResource("RectangleShape2D_50rsy")
