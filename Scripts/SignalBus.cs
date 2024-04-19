@@ -20,7 +20,10 @@ namespace Pinnuckle.Scripts
         public delegate void DisplayMeldsEventHandler(string owner, Array<MeldData> melds);
 
         [Signal]
-        public delegate void CardDroppedEventHandler(CardData cardData, int cardIndex);
+        public delegate void CardSelectedEventHandler(CardData cardData);
+
+        [Signal]
+        public delegate void CardPlayedEventHandler(string id);
 
         // Player signals
         [Signal]
