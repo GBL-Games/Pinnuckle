@@ -28,6 +28,9 @@ namespace Pinnuckle.Scripts
         {
             _signalBus = GetNode<SignalBus>("/root/SignalBus");
 
+            _signalBus.CardPlayed += _CardPlayed;
+            _signalBus.CardSelected += _CardSelected;
+
             MouseFilter = MouseFilterEnum.Stop;
             MouseDefaultCursorShape = CardOwner == "player" ? CursorShape.PointingHand : CursorShape.Arrow;
 
@@ -39,33 +42,57 @@ namespace Pinnuckle.Scripts
             base._Ready();
         }
 
+        #region Card Selection & Play
+
+        private void _CardSelected(CardData cardData)
+        {
+            if (cardData.Id == CardInfo.Id || CardOwner != "player") return;
+
+            _FocusCard(_zIndex, false);
+            _selected = false;
+        }
+
+        // TODO: PIN-17 - https://linear.app/pinnuckle/issue/PIN-17/destroy-card-instance
+        private void _CardPlayed(string id)
+        {
+            if (id != CardInfo.Id || CardOwner != "player") return;
+            Visible = false;
+        }
+
+        #endregion
+
+        #region Card Input Events
+
         public override void _GuiInput(InputEvent @event)
         {
+            if (CardOwner != "player") return;
+
             if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
             {
-                _dragging = true;
-            }
-
-            if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
-            {
-                if (_dragging)
+                if (_selected)
                 {
-                    _dragging = false;
-                    _ResetTween();
-                    _tween.TweenProperty(this, "global_position", _originalPosition, .5f)
-                        .SetTrans(Tween.TransitionType.Elastic);
-                    _tween.Finished += () =>
-                    {
-                        _tween.Kill();
-                        ZIndex = _zIndex;
-                    };
+                    _FocusCard(_zIndex, false);
                 }
-            }
+                else
+                {
+                    _signalBus.EmitSignal("CardSelected", CardInfo);
+                    ZIndex = 12;
+                }
 
-            if (@event is InputEventMouseMotion mouseMotion && _dragging)
-            {
-                GlobalPosition = new Vector2(GetGlobalMousePosition().X - 12.5f, GetGlobalMousePosition().Y - 18);
+                _selected = !_selected;
             }
+        }
+
+        private void _FocusCard(int zIndex, bool focus)
+        {
+            Vector2 pos = new Vector2(Position.X, focus ? Position.Y - 10 : 0);
+            Vector2 scale = new Vector2(focus ? 1.25f : 1, focus ? 1.25f : 1);
+            _ResetTween();
+            _tween.TweenProperty(this, "position", pos, .01f)
+                .SetTrans(Tween.TransitionType.Sine).SetDelay(.05f);
+            _tween.TweenProperty(this, "scale", scale, .1f)
+                .SetTrans(Tween.TransitionType.Back);
+            ZIndex = focus ? zIndex : _zIndex;
         }
 
         private void _ResetTween()
@@ -80,27 +107,27 @@ namespace Pinnuckle.Scripts
 
         private void _on_mouse_entered()
         {
-            if (_dragging) return;
             if (CardOwner != "player") return;
 
-            _ResetTween();
-            _tween.TweenProperty(this, "position", new Vector2(Position.X, Position.Y - 10), .1f)
-                .SetTrans(Tween.TransitionType.Sine);
-            _tween.TweenProperty(this, "scale", new Vector2(1.25f, 1.25f), .1f)
-                .SetTrans(Tween.TransitionType.Back);
-            ZIndex = 12;
+            if (!_selected)
+            {
+                _FocusCard(13, true);
+            }
         }
 
         private void _on_mouse_exited()
         {
             if (CardOwner != "player") return;
 
-            _ResetTween();
-            _tween.TweenProperty(this, "position", new Vector2(Position.X, 0), .025f)
-                .SetTrans(Tween.TransitionType.Sine);
-            _tween.TweenProperty(this, "scale", new Vector2(1, 1), .025f).SetTrans(Tween.TransitionType.Sine);
-            ZIndex = _zIndex;
+            if (!_selected)
+            {
+                _FocusCard(_zIndex, false);
+            }
         }
+
+        #endregion
+
+        #region Card Texture
 
         private AtlasTexture _GetCardAtlas()
         {
@@ -142,5 +169,7 @@ namespace Pinnuckle.Scripts
                 _ => 108
             };
         }
+
+        #endregion
     }
 }

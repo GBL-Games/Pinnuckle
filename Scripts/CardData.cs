@@ -3,7 +3,7 @@ using Godot;
 
 public partial class CardData : GodotObject
 {
-    private string Id { get; set; }
+    public string Id { get; set; }
     public string Rank { get; set; }
     public string Suit { get; set; }
 
