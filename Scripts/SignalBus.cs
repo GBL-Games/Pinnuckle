@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using Array = System.Array;
 
 namespace Pinnuckle.Scripts
 {
@@ -23,7 +24,10 @@ namespace Pinnuckle.Scripts
         public delegate void CardSelectedEventHandler(CardData cardData);
 
         [Signal]
-        public delegate void CardPlayedEventHandler(string id);
+        public delegate void CardPlayedEventHandler(string owner, string id);
+
+        [Signal]
+        public delegate void CardHandUpdatedEventHandler(string owner, Array<CardData> hand);
 
         // Player signals
         [Signal]

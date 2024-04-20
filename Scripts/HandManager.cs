@@ -5,9 +5,11 @@ using Newtonsoft.Json;
 
 namespace Pinnuckle.Scripts
 {
+    [GlobalClass]
     public partial class HandManager : HBoxContainer
     {
         private SignalBus _signalBus;
+
         private Array<CardData> _currentHand = [];
 
         private PackedScene _card;
@@ -55,6 +57,7 @@ namespace Pinnuckle.Scripts
 
             _handMelds = GetHandMelds();
             _signalBus.EmitSignal("MeldListUpdate", HandOwner, _handMelds);
+            _signalBus.EmitSignal("CardHandUpdated", HandOwner, _currentHand);
         }
 
         private Array<MeldData> GetHandMelds()

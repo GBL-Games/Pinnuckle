@@ -53,9 +53,9 @@ namespace Pinnuckle.Scripts
         }
 
         // TODO: PIN-17 - https://linear.app/pinnuckle/issue/PIN-17/destroy-card-instance
-        private void _CardPlayed(string id)
+        private void _CardPlayed(string cardOwner, string id)
         {
-            if (id != CardInfo.Id || CardOwner != "player") return;
+            if (id != CardInfo.Id && CardOwner != cardOwner) return;
             Visible = false;
         }
 
