@@ -23,6 +23,7 @@ namespace Pinnuckle.Scripts
         private bool _isPlayersTurn;
         private string _whoWentFirst;
         private int _currentTrick = 1;
+        private string _ledSuit;
 
         private Array<CardData> _currentPlayerHand = [];
         private Array<CardData> _currentOpponentHand = [];
@@ -61,7 +62,9 @@ namespace Pinnuckle.Scripts
 
             if (!_isPlayersTurn)
             {
+                GD.Print("Opponent goes first");
                 _OpponentsTurn();
+                _RunCurrentTrick();
             }
         }
 
@@ -157,12 +160,18 @@ namespace Pinnuckle.Scripts
 
         private void _RunCurrentTrick()
         {
-            GD.Print("Current Trick: " + _currentTrick);
-            GD.Print("Selected Player Card: " + _selectedPlayerCard.Title());
-
             _OpponentsTurn();
 
-            GD.Print("Selected Opponent Card: " + _selectedOpponentCard.Title());
+            GD.Print("Current Trick: " + _currentTrick);
+            if (_selectedPlayerCard != null) GD.Print("Selected Player Card: " + _selectedPlayerCard.Title());
+            if (_currentOpponentHand != null) GD.Print("Selected Opponent Card: " + _selectedOpponentCard.Title());
+
+            _ledSuit = _whoWentFirst == "player" && _selectedPlayerCard != null
+                ? _selectedPlayerCard.Suit
+                : _selectedOpponentCard.Suit;
+
+            GD.PrintT(_ledSuit, "Opponent suit: " + _selectedOpponentCard.Suit);
+            _currentTrick++;
         }
 
         #endregion
@@ -177,16 +186,60 @@ namespace Pinnuckle.Scripts
         private CardData _FindBestOpponentCard()
         {
             CardData bestCard = null;
+            CardData lowestTrumpCard = null;
+            CardData lowestCard = null;
 
+            // Run if the player went first
             foreach (CardData cardData in _currentOpponentHand)
             {
-                if (cardData.Value > _selectedPlayerCard.Value && (bestCard == null || cardData.Value < bestCard.Value))
+                if (_whoWentFirst == "player")
                 {
-                    bestCard = cardData;
+                    // Check if the card has a higher value that the selected card
+                    // and if it's higher than the current best card.
+                    if (cardData.Value > _selectedPlayerCard.Value && cardData.Suit == _selectedPlayerCard.Suit &&
+                        (bestCard == null || cardData.Value < bestCard.Value))
+                    {
+                        bestCard = cardData;
+                    }
+                    // Check if the card has the trump suit and is the lowest trump card
+                    else if (cardData.Suit == TrumpSuit &&
+                             (lowestTrumpCard == null || cardData.Value < lowestTrumpCard.Value))
+                    {
+                        lowestTrumpCard = cardData;
+                    }
+                    // If the selected card is not from the trump suit
+                    // and the card has a higher value that the selected card
+                    // and if it's higher than the current best card
+                    else if (cardData.Suit != TrumpSuit && cardData.Value > _selectedPlayerCard.Value &&
+                             (bestCard == null || cardData.Value < bestCard.Value))
+                    {
+                        bestCard = cardData;
+                    }
+                    // Check if the card has the same suit as the trump suit
+                    // and is the lowest card with that suit
+                    else if (cardData.Suit == TrumpSuit && (lowestCard == null || cardData.Value < lowestCard.Value))
+                    {
+                        lowestCard = cardData;
+                    }
+                    // Check if the card is the lowest overal card
+                    else if (lowestCard == null || cardData.Value < lowestCard.Value)
+                    {
+                        lowestCard = cardData;
+                    }
                 }
-                else if (cardData.Value == _selectedPlayerCard.Value && bestCard == null)
+                else
                 {
-                    bestCard = cardData;
+                    if (cardData.Suit != TrumpSuit && (bestCard == null || cardData.Value > bestCard.Value))
+                    {
+                        bestCard = cardData;
+                    }
+                }
+
+                // If no card with a higher value than the selected card is found
+                // use the lowest trump card if available, otherwise use the lowest card
+                if (bestCard == null)
+                {
+                    bestCard = lowestTrumpCard ?? lowestCard;
                 }
             }
 

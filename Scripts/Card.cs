@@ -135,10 +135,10 @@ namespace Pinnuckle.Scripts
             Resource img = ResourceLoader.Load("res://Assets/pixelCards/CuteCardsPixel_outline.png");
             atlas.Atlas = (Texture2D)img;
 
-            if (CardOwner == "player")
-            {
-                _SetAtlasRegion();
-            }
+            // if (CardOwner == "player")
+            // {
+            _SetAtlasRegion();
+            // }
 
             Vector2 regionSize = new Vector2(25, 36);
             Vector2 regionPosition = new Vector2(_atlasX, _atlasY);
