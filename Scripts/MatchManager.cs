@@ -118,7 +118,7 @@ namespace Pinnuckle.Scripts
             bool isLastTrick = _currentTrick == 12;
 
             if (listOwner == "player" && _selectedPlayerCard != null)
-                TotalPlayerDmg += isLastTrick && _selectedPlayerCard.Rank != "Ace" ? 11 : _selectedPlayerCard.Value;
+                TotalPlayerDmg += isLastTrick && _selectedPlayerCard.Rank != "Ace" ? 10 : _selectedPlayerCard.Value;
             if (listOwner == "opponent" && _selectedOpponentCard != null)
                 TotalOpponentDmg += isLastTrick && _selectedOpponentCard.Rank != "Ace"
                     ? 11
