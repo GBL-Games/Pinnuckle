@@ -115,9 +115,14 @@ namespace Pinnuckle.Scripts
 
         private void _UpdateDamageText(string listOwner)
         {
-            if (listOwner == "player" && _selectedPlayerCard != null) TotalPlayerDmg += _selectedPlayerCard.Value;
+            bool isLastTrick = _currentTrick == 12;
+
+            if (listOwner == "player" && _selectedPlayerCard != null)
+                TotalPlayerDmg += isLastTrick && _selectedPlayerCard.Rank != "Ace" ? 10 : _selectedPlayerCard.Value;
             if (listOwner == "opponent" && _selectedOpponentCard != null)
-                TotalOpponentDmg += _selectedOpponentCard.Value;
+                TotalOpponentDmg += isLastTrick && _selectedOpponentCard.Rank != "Ace"
+                    ? 10
+                    : _selectedOpponentCard.Value;
 
             int totalDmg = listOwner == "player" ? TotalPlayerDmg : TotalOpponentDmg;
 
@@ -167,7 +172,12 @@ namespace Pinnuckle.Scripts
         private void _RunCurrentTrick()
         {
             string trickWinner = _CheckTrickWinner(); // check to see who won the trick
-            _currentTrick++; // increase the trick counter 
+
+            if (_currentTrick < 12)
+            {
+                _currentTrick++; // increase the trick counter 
+            }
+
             GD.Print("Trick winner: " + trickWinner);
 
             // Update the dmg ui of the trick winner as only they get an increase to their dmg
