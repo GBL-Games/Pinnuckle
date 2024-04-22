@@ -24,6 +24,7 @@ namespace Pinnuckle.Scripts
         private string _whoWentFirst;
         private int _currentTrick = 1;
         private string _ledSuit;
+        private bool _canPlayCard;
 
         private Array<CardData> _currentPlayerHand = [];
         private Array<CardData> _currentOpponentHand = [];
@@ -36,48 +37,42 @@ namespace Pinnuckle.Scripts
 
             _ConnectSignals();
             _SetTrumpSuit();
+            _ChooseFirstMove();
         }
+
+        #region Match Setup
 
         private void _ConnectSignals()
         {
             _signalBus = GetNode<SignalBus>("/root/SignalBus");
 
-            _signalBus.MeldListUpdate += _CalculateMeldsDamage;
-            _signalBus.CardHandUpdated += _SetLocalHands;
+            _signalBus.CardHandUpdated += _UpdateLocalHands;
             _signalBus.CardSelected += _PlayerCardSelected;
+            _signalBus.MeldListUpdate += _CalculateMeldsDamage;
 
             _signalBus.EmitSignal("ShuffleCards");
             _signalBus.EmitSignal("DealCards", 12, "player");
             _signalBus.EmitSignal("DealCards", 12, "opponent");
         }
 
-        #region Round Setup
+        private void _UpdateLocalHands(string handOwner, Array<CardData> hand)
+        {
+            if (handOwner == "player")
+            {
+                _currentPlayerHand = [];
+                _currentPlayerHand.AddRange(hand);
+            }
+            else
+            {
+                _currentOpponentHand = [];
+                _currentOpponentHand.AddRange(hand);
+            }
+        }
 
         private void _SetTrumpSuit()
         {
             TrumpSuit = _suits[_random.Next(0, 3)];
             GetNode<RichTextLabel>("Match UI/UI Right/TrumpSuit").Text = "Trump Suit: " + TrumpSuit;
-
-            _ChooseFirstMove();
-
-            if (!_isPlayersTurn)
-            {
-                GD.Print("Opponent goes first");
-                _OpponentsTurn();
-                _RunCurrentTrick();
-            }
-        }
-
-        private void _SetLocalHands(string handOwner, Array<CardData> hand)
-        {
-            if (handOwner == "player")
-            {
-                _currentPlayerHand.AddRange(hand);
-            }
-            else
-            {
-                _currentOpponentHand.AddRange(hand);
-            }
         }
 
         private void _ChooseFirstMove()
@@ -92,7 +87,10 @@ namespace Pinnuckle.Scripts
             else
             {
                 _whoWentFirst = "opponent";
+                _OpponentsTurn();
             }
+
+            GD.Print(_whoWentFirst);
         }
 
         #endregion
@@ -117,10 +115,16 @@ namespace Pinnuckle.Scripts
 
         private void _UpdateDamageText(string listOwner)
         {
+            if (listOwner == "player" && _selectedPlayerCard != null) TotalPlayerDmg += _selectedPlayerCard.Value;
+            if (listOwner == "opponent" && _selectedOpponentCard != null)
+                TotalOpponentDmg += _selectedOpponentCard.Value;
+
             int totalDmg = listOwner == "player" ? TotalPlayerDmg : TotalOpponentDmg;
+
             NodePath path = listOwner == "player"
                 ? "Match UI/UI Right/PlayerMeldsList/Hand Damage"
                 : "Match UI/OpponentMeldsList/Hand Damage";
+
             GetNode<RichTextLabel>(path).Text =
                 "Total Damage: " + totalDmg;
         }
@@ -129,28 +133,29 @@ namespace Pinnuckle.Scripts
 
         #region Player Card Playing
 
+        // Select player card
         private void _PlayerCardSelected(CardData cardData)
         {
+            GD.Print(cardData.Title() + " selected");
             _selectedPlayerCard = cardData;
         }
 
+        // Play player card
+        private void _PlayerCardPlayed()
+        {
+            _signalBus.EmitSignal("CardPlayed", "player", _selectedPlayerCard);
+            if (_whoWentFirst == "opponent") _RunCurrentTrick(); // If opponent went first run the trick
+            if (_whoWentFirst == "player") _OpponentsTurn(); // If player went first run opponent turn
+        }
+
+        // Play card button click handler
         private void _on_play_card(InputEvent @event)
         {
             if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
             {
-                _RunCurrentTrick();
-                // if (_selectedPlayerCard != null)
-                // {
-                //     TotalPlayerDmg += _selectedPlayerCard.Value;
-                //     _UpdateDamageText("player");
-                //     _signalBus.EmitSignal("CardPlayed", _selectedPlayerCard.Id);
-                //     _selectedCardIndex = -1;
-                //
-                //     if (GetNode<HBoxContainer>("Hands/Opponent").GetChildCount() > 0)
-                //     {
-                //         _OpponentsTurn();
-                //     }
-                // }
+                // prevent playing card if no card is selected
+                if (_selectedPlayerCard == null) return;
+                _PlayerCardPlayed();
             }
         }
 
@@ -158,20 +163,84 @@ namespace Pinnuckle.Scripts
 
         #region Turn Management
 
+        // Runs the current trick based on cards selected
         private void _RunCurrentTrick()
         {
-            _OpponentsTurn();
+            string trickWinner = _CheckTrickWinner(); // check to see who won the trick
+            _currentTrick++; // increase the trick counter 
+            GD.Print("Trick winner: " + trickWinner);
 
-            GD.Print("Current Trick: " + _currentTrick);
-            if (_selectedPlayerCard != null) GD.Print("Selected Player Card: " + _selectedPlayerCard.Title());
-            if (_currentOpponentHand != null) GD.Print("Selected Opponent Card: " + _selectedOpponentCard.Title());
+            // Update the dmg ui of the trick winner as only they get an increase to their dmg
+            _UpdateDamageText(trickWinner);
 
-            _ledSuit = _whoWentFirst == "player" && _selectedPlayerCard != null
-                ? _selectedPlayerCard.Suit
-                : _selectedOpponentCard.Suit;
+            // Reset selected cards
+            _selectedOpponentCard = null;
+            _selectedPlayerCard = null;
 
-            GD.PrintT(_ledSuit, "Opponent suit: " + _selectedOpponentCard.Suit);
-            _currentTrick++;
+            // if opponent went first tell them to run next turn
+            if (_whoWentFirst == "opponent") _OpponentsTurn();
+        }
+
+        // Checks to see who took the trick based on the selected cards
+        private string _CheckTrickWinner()
+        {
+            string playerSuit = _selectedPlayerCard.Suit;
+            int playerValue = _selectedPlayerCard.Value;
+            string opponentSuit = _selectedOpponentCard.Suit;
+            int opponentValue = _selectedOpponentCard.Value;
+
+            if (_whoWentFirst == "player")
+            {
+                // Run if player suit is trump suit
+                if (playerSuit == TrumpSuit)
+                {
+                    // if opponent suit is trump suit & player card value is <= to player card value
+                    if (opponentSuit == TrumpSuit)
+                    {
+                        if (opponentValue <= playerValue) return "player";
+                        if (opponentValue > playerValue) return "opponent";
+                    }
+
+                    return "player";
+                }
+
+                // Run if player suit is not trump suit & opponent suit is trump suit
+                if (opponentSuit == TrumpSuit) return "opponent";
+
+                // Run if player suit is not trump suit & opponent suit is not trump suit
+                if (playerSuit != TrumpSuit && opponentSuit != TrumpSuit)
+                {
+                    // Run if opponent suit isn't led suit
+                    if (playerSuit != opponentSuit || (playerSuit == opponentSuit && playerValue >= opponentValue))
+                        return "player";
+                    // Run if opponent suit is led suit
+                    if (playerSuit == opponentSuit && opponentValue > playerValue) return "opponent";
+                }
+            }
+
+            // Same as above only if the opponent went first
+            if (_whoWentFirst == "opponent")
+            {
+                if (opponentSuit == TrumpSuit)
+                {
+                    if (playerSuit == TrumpSuit)
+                    {
+                        if (playerValue <= opponentValue) return "opponent";
+                        if (playerValue > opponentValue) return "player";
+                    }
+                }
+
+                if (playerSuit == TrumpSuit) return "player";
+
+                if (opponentSuit != TrumpSuit && opponentSuit != TrumpSuit)
+                {
+                    if (opponentSuit != playerSuit || (opponentSuit == playerSuit && opponentValue >= playerValue))
+                        return "opponent";
+                    if (opponentSuit == playerSuit && playerValue > opponentValue) return "player";
+                }
+            }
+
+            return _whoWentFirst;
         }
 
         #endregion
@@ -181,6 +250,10 @@ namespace Pinnuckle.Scripts
         private void _OpponentsTurn()
         {
             _selectedOpponentCard = _FindBestOpponentCard();
+            _signalBus.EmitSignal("CardPlayed", "opponent", _selectedOpponentCard);
+            GD.Print("Opponent plays: " + _selectedOpponentCard.Title());
+
+            if (_whoWentFirst == "player") _RunCurrentTrick();
         }
 
         private CardData _FindBestOpponentCard()
@@ -197,7 +270,7 @@ namespace Pinnuckle.Scripts
                     // Check if the card has a higher value that the selected card
                     // and if it's higher than the current best card.
                     if (cardData.Value > _selectedPlayerCard.Value && cardData.Suit == _selectedPlayerCard.Suit &&
-                        (bestCard == null || cardData.Value < bestCard.Value))
+                        (bestCard == null || cardData.Value <= bestCard.Value))
                     {
                         bestCard = cardData;
                     }
@@ -215,34 +288,25 @@ namespace Pinnuckle.Scripts
                     {
                         bestCard = cardData;
                     }
-                    // Check if the card has the same suit as the trump suit
-                    // and is the lowest card with that suit
-                    else if (cardData.Suit == TrumpSuit && (lowestCard == null || cardData.Value < lowestCard.Value))
-                    {
-                        lowestCard = cardData;
-                    }
-                    // Check if the card is the lowest overal card
-                    else if (lowestCard == null || cardData.Value < lowestCard.Value)
-                    {
-                        lowestCard = cardData;
-                    }
-                }
-                else
-                {
-                    if (cardData.Suit != TrumpSuit && (bestCard == null || cardData.Value > bestCard.Value))
-                    {
-                        bestCard = cardData;
-                    }
                 }
 
-                // If no card with a higher value than the selected card is found
-                // use the lowest trump card if available, otherwise use the lowest card
-                if (bestCard == null)
+                // Check if the card has the same suit as the trump suit
+                // and is the lowest card with that suit
+                if (cardData.Suit == TrumpSuit && (lowestCard == null || cardData.Value < lowestCard.Value))
                 {
-                    bestCard = lowestTrumpCard ?? lowestCard;
+                    lowestCard = cardData;
+                }
+                // Check if the card is the lowest overal card
+                else if (lowestCard == null || cardData.Value < lowestCard.Value)
+                {
+                    lowestCard = cardData;
                 }
             }
 
+            bestCard ??= lowestTrumpCard ?? lowestCard;
+
+            // If no card with a higher value than the selected card is found
+            // use the lowest trump card if available, otherwise use the lowest card
             return bestCard;
         }
 

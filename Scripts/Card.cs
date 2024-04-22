@@ -27,8 +27,6 @@ namespace Pinnuckle.Scripts
         public override void _Ready()
         {
             _signalBus = GetNode<SignalBus>("/root/SignalBus");
-
-            _signalBus.CardPlayed += _CardPlayed;
             _signalBus.CardSelected += _CardSelected;
 
             MouseFilter = MouseFilterEnum.Stop;
@@ -48,15 +46,8 @@ namespace Pinnuckle.Scripts
         {
             if (cardData.Id == CardInfo.Id || CardOwner != "player") return;
 
-            _FocusCard(_zIndex, false);
+            if (CardOwner == "player") _FocusCard(_zIndex, false);
             _selected = false;
-        }
-
-        // TODO: PIN-17 - https://linear.app/pinnuckle/issue/PIN-17/destroy-card-instance
-        private void _CardPlayed(string cardOwner, string id)
-        {
-            if (id != CardInfo.Id && CardOwner != cardOwner) return;
-            Visible = false;
         }
 
         #endregion
@@ -76,7 +67,7 @@ namespace Pinnuckle.Scripts
                 else
                 {
                     _signalBus.EmitSignal("CardSelected", CardInfo);
-                    ZIndex = 12;
+                    ZIndex = GetParent<HBoxContainer>().GetChildCount();
                 }
 
                 _selected = !_selected;
@@ -135,10 +126,10 @@ namespace Pinnuckle.Scripts
             Resource img = ResourceLoader.Load("res://Assets/pixelCards/CuteCardsPixel_outline.png");
             atlas.Atlas = (Texture2D)img;
 
-            // if (CardOwner == "player")
-            // {
-            _SetAtlasRegion();
-            // }
+            if (CardOwner == "player")
+            {
+                _SetAtlasRegion();
+            }
 
             Vector2 regionSize = new Vector2(25, 36);
             Vector2 regionPosition = new Vector2(_atlasX, _atlasY);
@@ -171,5 +162,11 @@ namespace Pinnuckle.Scripts
         }
 
         #endregion
+
+        public override void _ExitTree()
+        {
+            _signalBus.CardSelected -= _CardSelected;
+            base._ExitTree();
+        }
     }
 }

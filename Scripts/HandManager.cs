@@ -30,19 +30,34 @@ namespace Pinnuckle.Scripts
             _allMelds = LoadMelds();
 
             _signalBus = GetNode<SignalBus>("/root/SignalBus");
-            _signalBus.GiveCards += AddToHand;
+            _signalBus.GiveCards += _AddToHand;
+            _signalBus.CardPlayed += _RemoveFromHand;
         }
 
-        private void AddToHand(string owner, Array<CardData> cards)
+        private void _AddToHand(string owner, Array<CardData> cards)
         {
             if (owner == HandOwner)
             {
                 _currentHand.AddRange(cards);
-                UpdateHand();
+                _UpdateHand();
             }
         }
 
-        private void UpdateHand()
+        private void _RemoveFromHand(string owner, CardData cardData)
+        {
+            if (owner == HandOwner)
+            {
+                GD.Print("Remove ", cardData.Title(), " from " + owner + "'s hand");
+                int cardIndex = _currentHand.IndexOf(cardData);
+                Array<Node> cards = GetChildren();
+                cards[cardIndex].QueueFree();
+                _currentHand.Remove(cardData);
+
+                _signalBus.EmitSignal("CardHandUpdated", HandOwner, _currentHand);
+            }
+        }
+
+        private void _UpdateHand()
         {
             int totalCards = _currentHand.Count;
 

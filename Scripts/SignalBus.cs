@@ -24,7 +24,7 @@ namespace Pinnuckle.Scripts
         public delegate void CardSelectedEventHandler(CardData cardData);
 
         [Signal]
-        public delegate void CardPlayedEventHandler(string owner, string id);
+        public delegate void CardPlayedEventHandler(string owner, CardData cardData);
 
         [Signal]
         public delegate void CardHandUpdatedEventHandler(string owner, Array<CardData> hand);
