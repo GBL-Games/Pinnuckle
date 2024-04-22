@@ -40,9 +40,7 @@ namespace Pinnuckle.Scripts
             for (int i = 0; i < ShuffledDeck.Count; i++)
             {
                 int j = rand.Next(i + 1);
-                CardData tempCard = ShuffledDeck[i];
-                ShuffledDeck[i] = ShuffledDeck[j];
-                ShuffledDeck[j] = tempCard;
+                (ShuffledDeck[i], ShuffledDeck[j]) = (ShuffledDeck[j], ShuffledDeck[i]);
             }
         }
 
