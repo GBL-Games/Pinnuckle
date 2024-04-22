@@ -121,7 +121,7 @@ namespace Pinnuckle.Scripts
                 TotalPlayerDmg += isLastTrick && _selectedPlayerCard.Rank != "Ace" ? 10 : _selectedPlayerCard.Value;
             if (listOwner == "opponent" && _selectedOpponentCard != null)
                 TotalOpponentDmg += isLastTrick && _selectedOpponentCard.Rank != "Ace"
-                    ? 11
+                    ? 10
                     : _selectedOpponentCard.Value;
 
             int totalDmg = listOwner == "player" ? TotalPlayerDmg : TotalOpponentDmg;
