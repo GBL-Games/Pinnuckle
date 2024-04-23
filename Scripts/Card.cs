@@ -10,6 +10,7 @@ namespace Pinnuckle.Scripts
         public CardData CardInfo;
         public string CardOwner;
         public int CardIndex;
+        public NodePath CardPlayedDisplayPath;
 
         private SignalBus _signalBus;
         private Tween _tween;
@@ -120,13 +121,13 @@ namespace Pinnuckle.Scripts
 
         #region Card Texture
 
-        private AtlasTexture _GetCardAtlas()
+        private AtlasTexture _GetCardAtlas(bool displayPlayed = false)
         {
             AtlasTexture atlas = new AtlasTexture();
             Resource img = ResourceLoader.Load("res://Assets/pixelCards/CuteCardsPixel_outline.png");
             atlas.Atlas = (Texture2D)img;
 
-            if (CardOwner == "player")
+            if (CardOwner == "player" || displayPlayed)
             {
                 _SetAtlasRegion();
             }
@@ -163,8 +164,20 @@ namespace Pinnuckle.Scripts
 
         #endregion
 
+        private void _DisplayPlayedCard()
+        {
+            Sprite2D playedDisplay =
+                GetNodeOrNull<Sprite2D>("../" + CardPlayedDisplayPath);
+
+            if (playedDisplay != null)
+            {
+                playedDisplay.Texture = _GetCardAtlas(true);
+            }
+        }
+
         public override void _ExitTree()
         {
+            _DisplayPlayedCard();
             _signalBus.CardSelected -= _CardSelected;
             base._ExitTree();
         }

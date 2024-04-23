@@ -154,6 +154,7 @@ script = ExtResource("6_627g5")
 SpreadCurve = ExtResource("3_uu87x")
 HeightCurve = ExtResource("4_abjid")
 CardSpacing = 50.0
+PlayedCardDisplay = NodePath("../../Play Area/Opponent Card")
 HandOwner = "opponent"
 
 [node name="Player" type="HBoxContainer" parent="Hands"]
@@ -168,6 +169,7 @@ script = ExtResource("6_627g5")
 SpreadCurve = ExtResource("3_uu87x")
 HeightCurve = ExtResource("4_abjid")
 CardSpacing = 100.0
+PlayedCardDisplay = NodePath("../../Play Area/Player Card")
 
 [node name="Play Card" type="Button" parent="."]
 layout_mode = 0
@@ -177,5 +179,14 @@ offset_right = 409.0
 offset_bottom = 232.0
 theme_override_font_sizes/font_size = 7
 text = "Play Card"
+
+[node name="Play Area" type="Node2D" parent="."]
+position = Vector2(210, 120)
+
+[node name="Player Card" type="Sprite2D" parent="Play Area"]
+position = Vector2(-35, 0)
+
+[node name="Opponent Card" type="Sprite2D" parent="Play Area"]
+position = Vector2(37, 0)
 
 [connection signal="gui_input" from="Play Card" to="." method="_on_play_card"]
