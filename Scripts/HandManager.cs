@@ -17,7 +17,7 @@ namespace Pinnuckle.Scripts
         [Export] public Curve SpreadCurve;
         [Export] public Curve HeightCurve;
         [Export] public float CardSpacing;
-
+        [Export] public NodePath PlayedCardDisplay;
         [Export] public string HandOwner = "player";
 
         private Array<MeldData> _handMelds;
@@ -67,6 +67,7 @@ namespace Pinnuckle.Scripts
                 cardInstance.CardInfo = _currentHand[i];
                 cardInstance.CardOwner = HandOwner;
                 cardInstance.CardIndex = i;
+                cardInstance.CardPlayedDisplayPath = PlayedCardDisplay;
                 AddChild(cardInstance);
             }
 
