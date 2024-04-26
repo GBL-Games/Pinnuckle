@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://g3vks3ntso57"]
+
+[ext_resource type="Script" path="res://addons/ScenicRoute/ScenicRouteDock.cs" id="1_pqc5o"]
+
+[node name="ScenicRouteDock" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pqc5o")
+
+[node name="Scene List Container" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scene List" type="VBoxContainer" parent="Scene List Container"]
+layout_mode = 2
+
+[node name="Add Scene Form" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 211.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="Add Scene Form"]
+
+[node name="Button" type="Button" parent="Add Scene Form"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "+"

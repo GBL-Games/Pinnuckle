@@ -1,6 +1,4 @@
-using System;
 using Godot;
-using Godot.Collections;
 
 namespace Pinnuckle.Scripts
 {
@@ -164,6 +162,8 @@ namespace Pinnuckle.Scripts
 
         #endregion
 
+        #region Card Played
+
         private void _DisplayPlayedCard()
         {
             Sprite2D playedDisplay =
@@ -181,5 +181,7 @@ namespace Pinnuckle.Scripts
             _signalBus.CardSelected -= _CardSelected;
             base._ExitTree();
         }
+
+        #endregion
     }
 }
