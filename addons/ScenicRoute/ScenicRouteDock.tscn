@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://g3vks3ntso57"]
 
-[ext_resource type="Script" path="res://addons/ScenicRoute/ScenicRouteDock.cs" id="1_pqc5o"]
+[ext_resource type="Script" path="res://addons/ScenicRoute/ScenicRouteDock.cs" id="1_cu7hn"]
 
 [node name="ScenicRouteDock" type="Control"]
 layout_mode = 3
@@ -9,32 +9,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_pqc5o")
+script = ExtResource("1_cu7hn")
 
-[node name="Scene List Container" type="ScrollContainer" parent="."]
+[node name="Wrapper" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -54.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Scene List" type="VBoxContainer" parent="Scene List Container"]
+[node name="Scene List Container" type="ScrollContainer" parent="Wrapper"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Add Scene Form" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 211.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ResourcePreloader" type="ResourcePreloader" parent="Add Scene Form"]
-
-[node name="Button" type="Button" parent="Add Scene Form"]
+[node name="Scene List" type="VBoxContainer" parent="Wrapper/Scene List Container"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
-text = "+"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Wrapper"]
+layout_mode = 2
+text = "Refresh List"

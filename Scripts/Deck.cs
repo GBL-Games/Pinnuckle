@@ -12,7 +12,7 @@ namespace Pinnuckle.Scripts
 
         public Array<CardData> ShuffledDeck;
 
-        static readonly Random rand = new Random();
+        private static readonly Random Rand = new Random();
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -39,7 +39,7 @@ namespace Pinnuckle.Scripts
         {
             for (int i = 0; i < ShuffledDeck.Count; i++)
             {
-                int j = rand.Next(i + 1);
+                int j = Rand.Next(i + 1);
                 (ShuffledDeck[i], ShuffledDeck[j]) = (ShuffledDeck[j], ShuffledDeck[i]);
             }
         }

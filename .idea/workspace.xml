@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c44b03d-8834-4be4-a018-4bf23b4cf9a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/json/melds.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/json/melds.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Objects/Card.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/Objects/Card.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scenes/Match.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/Scenes/Match.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Card.gd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/CardObject.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pinnuckle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Pinnuckle.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Deck.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Deck.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Deck.gd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Hand.gd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/HandManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/MatchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/MatchManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/MatchManager.gd" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/SignalBus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/SignalBus.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/SignalBus.gd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/ScenicRoute/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/ScenicRoute/Plugin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/ScenicRoute/PluginSignals.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/ScenicRoute/PluginSignals.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/ScenicRoute/SceneList.tscn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/ScenicRoute/ScenicRouteDock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/ScenicRoute/ScenicRouteDock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/ScenicRoute/ScenicRouteDock.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/addons/ScenicRoute/ScenicRouteDock.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/ScenicRoute/ScenicRoute_Old.tscn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +21,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2eootypV2K88u95Hip1ximNxtfK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -36,7 +33,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "task/PIN-34-SceneManager-Plugin",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -50,6 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712580511021</updated>
       <workItem from="1712580512421" duration="5000" />
+      <workItem from="1714508819249" duration="3000" />
     </task>
     <servers />
   </component>

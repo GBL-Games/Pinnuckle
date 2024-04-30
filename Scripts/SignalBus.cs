@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using Array = System.Array;
 
 namespace Pinnuckle.Scripts
 {
