@@ -11,7 +11,6 @@ public partial class SceneListItem : HBoxContainer
     public override void _Ready()
     {
         _scenicRouteSignals = GetNode<ScenicRouteSignals>("/root/ScenicRouteSignals");
-        GD.Print("List Item");
     }
 
     private void _on_remove_pressed()

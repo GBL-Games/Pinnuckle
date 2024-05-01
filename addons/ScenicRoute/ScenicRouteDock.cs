@@ -19,13 +19,15 @@ public partial class ScenicRouteDock : Control
     private Dictionary<string, SceneData> _scenes;
 
     private PackedScene _listItem;
-
+    private VBoxContainer _listContainer;
     private ScenicRouteSignals _scenicRouteSignals;
 
     public override void _Ready()
     {
         _scenicRouteSignals = GetNode<ScenicRouteSignals>("/root/ScenicRouteSignals");
         _scenicRouteSignals.RemoveScene += _RemoveScene;
+
+        _listContainer = GetNode<VBoxContainer>("Wrapper/Scene List Container/Scene List");
 
         _LoadSceneList();
         _RefreshSceneList();
@@ -91,29 +93,27 @@ public partial class ScenicRouteDock : Control
 
     private void _RefreshSceneList()
     {
-        VBoxContainer listContainer = GetNode<VBoxContainer>("Wrapper/Scene List Container/Scene List");
-
-        if (listContainer.GetChildCount() > 0)
+        if (_listContainer.GetChildCount() > 0)
         {
-            foreach (Node listItem in listContainer.GetChildren())
+            foreach (Node listItem in _listContainer.GetChildren())
             {
-                listItem.Free();
+                _listContainer.RemoveChild(listItem);
             }
         }
 
-        if (listContainer.GetChildCount() == 0)
+        if (_listContainer.GetChildCount() == 0)
         {
-            _PopulateList(listContainer);
+            _PopulateList();
         }
     }
 
-    private void _PopulateList(VBoxContainer listContainer)
+    private void _PopulateList()
     {
         foreach (string sceneKey in _scenes.Keys)
         {
             HBoxContainer listItemInstance = ResourceLoader
                 .Load<PackedScene>("res://addons/ScenicRoute/SceneListItem.tscn").Instantiate<HBoxContainer>();
-            listContainer.AddChild(listItemInstance);
+            _listContainer.AddChild(listItemInstance);
             listItemInstance.GetNode<Label>("Panel/Label").Text = _scenes[sceneKey].Alias;
         }
     }
