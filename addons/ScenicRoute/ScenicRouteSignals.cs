@@ -1,15 +1,17 @@
+#if TOOLS
+
 using Godot;
 using Godot.Collections;
 
 namespace Pinnuckle.addons.ScenicRoute;
 
-public partial class PluginSignals : Node
+[Tool]
+public partial class ScenicRouteSignals : Node
 {
     [Signal]
     public delegate void SceneListUpdatedEventHandler(Dictionary<string, SceneData> scenes);
 
-    public override void _Ready()
-    {
-        GD.Print("Plugin Signals!");
-    }
+    [Signal]
+    public delegate void RemoveSceneEventHandler(string sceneKey);
 }
+#endif

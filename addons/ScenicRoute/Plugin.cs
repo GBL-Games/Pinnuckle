@@ -13,10 +13,16 @@ public partial class Plugin : EditorPlugin
 
     public override void _EnterTree()
     {
-        // Add Scene Manager
+        // Add Scenic Route Signal Bus
+        AddAutoloadSingleton("ScenicRouteSignals", "res://addons/ScenicRoute/ScenicRouteSignals.cs");
+        // Add Scenic Route Manager
         AddAutoloadSingleton("ScenicRouteManager", "res://addons/ScenicRoute/ScenicRouteManager.cs");
 
         // Initialization of the plugin goes here.
+
+        ScenicRouteSignals scenicRouteSignals = GetNode<ScenicRouteSignals>("/root/ScenicRouteSignals");
+
+        if (scenicRouteSignals == null) return;
         _dock = GD.Load<PackedScene>("res://addons/ScenicRoute/ScenicRouteDock.tscn").Instantiate<Control>();
         AddControlToDock(DockSlot.RightUl, _dock);
     }
@@ -25,6 +31,7 @@ public partial class Plugin : EditorPlugin
     {
         // Clean-up of the plugin goes here.
         RemoveAutoloadSingleton("ScenicRouteManager");
+        RemoveAutoloadSingleton("ScenicRouteSignals");
         RemoveControlFromDocks(_dock);
         _dock.Free();
     }

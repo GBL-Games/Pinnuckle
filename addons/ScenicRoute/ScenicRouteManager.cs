@@ -1,14 +1,14 @@
 using Godot;
 using Godot.Collections;
+using Newtonsoft.Json;
 
 namespace Pinnuckle.addons.ScenicRoute;
 
 public partial class ScenicRouteManager : Node
 {
-    public Dictionary<string, SceneData> Scenes = new();
-
+    private string _scenesPath = "res://addons/ScenicRoute/scenes.json";
+    private Dictionary<string, SceneData> _scenes = new();
     private SceneData _currentScene;
-
     private VBoxContainer _sceneList;
 
     public override void _Ready()
@@ -18,17 +18,28 @@ public partial class ScenicRouteManager : Node
         base._Ready();
     }
 
-    public void SwitchScene(string sceneKey)
+    public void SwitchCurrentScene(string sceneKey)
     {
-        if (Scenes[sceneKey] != null)
+        if (_scenes[sceneKey] != null)
         {
-            _currentScene = Scenes[sceneKey];
-            GetTree().ChangeSceneToFile(Scenes[sceneKey].Path);
+            _currentScene = _scenes[sceneKey];
+            GetTree().ChangeSceneToFile(_scenes[sceneKey].Path);
         }
     }
 
     public SceneData GetCurrentScene()
     {
         return _currentScene;
+    }
+
+    public Dictionary<string, SceneData> GetScenes()
+    {
+        return _scenes;
+    }
+
+    private void _LoadSceneList()
+    {
+        string file = FileAccess.Open(_scenesPath, FileAccess.ModeFlags.ReadWrite).GetAsText();
+        _scenes = JsonConvert.DeserializeObject<Dictionary<string, SceneData>>(file);
     }
 }

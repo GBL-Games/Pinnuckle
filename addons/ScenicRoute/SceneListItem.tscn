@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://ccqtdmq3bgs3g"]
+[gd_scene load_steps=2 format=3 uid="uid://ccqtdmq3bgs3g"]
+
+[ext_resource type="Script" path="res://addons/ScenicRoute/SceneListItem.cs" id="1_xrqoo"]
 
 [node name="SceneListItem" type="HBoxContainer"]
 anchors_preset = 10
@@ -6,6 +8,7 @@ anchor_right = 1.0
 offset_bottom = 8.0
 grow_horizontal = 2
 size_flags_horizontal = 3
+script = ExtResource("1_xrqoo")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -18,15 +21,17 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_top = 3.0
+offset_top = 9.0
 offset_right = -7.0
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "This is the Scene Name"
-visible_characters = 0
-visible_ratio = 0.0
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "-"
+
+[connection signal="pressed" from="Button" to="." method="_on_remove_pressed"]

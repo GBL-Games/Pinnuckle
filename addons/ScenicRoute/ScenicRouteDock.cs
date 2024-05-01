@@ -20,9 +20,13 @@ public partial class ScenicRouteDock : Control
 
     private PackedScene _listItem;
 
+    private ScenicRouteSignals _scenicRouteSignals;
+
     public override void _Ready()
     {
-        GD.Print("Scenic Route Dock");
+        _scenicRouteSignals = GetNode<ScenicRouteSignals>("/root/ScenicRouteSignals");
+        _scenicRouteSignals.RemoveScene += _RemoveScene;
+
         _LoadSceneList();
         _RefreshSceneList();
     }
@@ -37,10 +41,8 @@ public partial class ScenicRouteDock : Control
 
     public override bool _CanDropData(Vector2 atPosition, Variant data)
     {
-        GD.Print(atPosition, data.ToString());
         Dictionary<string, Variant> dropData = data.AsGodotDictionary<string, Variant>();
         _scenePaths = (Array<string>)dropData["files"];
-        GD.Print(dropData.ToString());
         return _scenePaths.Count > 0;
     }
 
@@ -74,6 +76,13 @@ public partial class ScenicRouteDock : Control
         _scenes[sceneName.ToLower()] = sceneData;
     }
 
+    private void _RemoveScene(string sceneKey)
+    {
+        _scenes.Remove(sceneKey);
+        _SaveSceneList();
+        _RefreshSceneList();
+    }
+
     private void _SaveSceneList()
     {
         using var file = FileAccess.Open("res://addons/ScenicRoute/scenes.json", FileAccess.ModeFlags.Write);
@@ -102,9 +111,10 @@ public partial class ScenicRouteDock : Control
     {
         foreach (string sceneKey in _scenes.Keys)
         {
-            SceneListItem listItemInstance = new SceneListItem();
-            listItemInstance.LabelText = _scenes[sceneKey].Alias;
+            HBoxContainer listItemInstance = ResourceLoader
+                .Load<PackedScene>("res://addons/ScenicRoute/SceneListItem.tscn").Instantiate<HBoxContainer>();
             listContainer.AddChild(listItemInstance);
+            listItemInstance.GetNode<Label>("Panel/Label").Text = _scenes[sceneKey].Alias;
         }
     }
 

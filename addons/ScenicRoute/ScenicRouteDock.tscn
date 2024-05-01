@@ -19,6 +19,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Label" type="Label" parent="Wrapper"]
+layout_mode = 2
+text = "Current Scenes"
+
 [node name="Scene List Container" type="ScrollContainer" parent="Wrapper"]
 layout_mode = 2
 size_flags_vertical = 3

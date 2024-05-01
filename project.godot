@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalBus="*res://Scripts/SignalBus.cs"
 GameManager="*res://Scripts/GameManager.cs"
+ScenicRouteSignals="*res://addons/ScenicRoute/ScenicRouteSignals.cs"
 ScenicRouteManager="*res://addons/ScenicRoute/ScenicRouteManager.cs"
 
 [display]
