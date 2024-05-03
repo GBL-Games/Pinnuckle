@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -12,7 +13,7 @@ public partial class ScenicRoute : Node
     private SceneData _currentScene;
     private VBoxContainer _sceneList;
 
-    private Variant _gameState;
+    private Variant? _gameState;
 
     public override void _Ready()
     {
@@ -22,9 +23,10 @@ public partial class ScenicRoute : Node
         base._Ready();
     }
 
-    public void LoadScene(string sceneKey, Variant gameState)
+    public void LoadScene(string sceneKey, Variant? gameState)
     {
-        _gameState = gameState;
+        if (gameState != null) _gameState = gameState;
+
         if (_scenes[sceneKey] != null)
         {
             _currentScene = _scenes[sceneKey];
@@ -42,7 +44,7 @@ public partial class ScenicRoute : Node
         return _currentScene;
     }
 
-    public Variant GetCurrentGameState()
+    public Variant? GetCurrentGameState()
     {
         return _gameState;
     }
