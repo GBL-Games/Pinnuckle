@@ -11,18 +11,21 @@ config_version=5
 [application]
 
 config/name="Pinnuckle"
-run/main_scene="res://Scenes/Match.tscn"
+run/main_scene="res://Scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-SignalBus="*res://Scripts/SignalBus.cs"
+SignalBus="*res://Scripts/Autoload/SignalBus.cs"
+GameManager="*res://Scripts/Autoload/GameManager.cs"
+ScenicRoute="*res://addons/ScenicRoute/ScenicRoute.cs"
 
 [display]
 
 window/size/viewport_width=420
 window/size/viewport_height=240
+window/size/initial_position_type=2
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
@@ -30,6 +33,10 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Pinnuckle"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ScenicRoute/plugin.cfg")
 
 [input]
 

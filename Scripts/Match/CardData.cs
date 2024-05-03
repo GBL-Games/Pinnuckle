@@ -1,5 +1,6 @@
-using System.Runtime.CompilerServices;
 using Godot;
+
+namespace Pinnuckle.Scripts.Match;
 
 public partial class CardData : GodotObject
 {

@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
 
-[ext_resource type="Script" path="res://Scripts/MatchManager.cs" id="1_00w78"]
-[ext_resource type="Script" path="res://Scripts/Deck.cs" id="3_d8t6j"]
+[ext_resource type="Script" path="res://Scripts/Managers/MatchManager.cs" id="1_00w78"]
+[ext_resource type="Script" path="res://Scripts/Match/Deck.cs" id="3_d8t6j"]
 [ext_resource type="Curve" uid="uid://c6axdux0x2i58" path="res://Resources/HandSpreadCurve.tres" id="3_uu87x"]
 [ext_resource type="Curve" uid="uid://bv80ochi4hmdv" path="res://Resources/HandHeightCurve.tres" id="4_abjid"]
 [ext_resource type="Texture2D" uid="uid://buyilmj61fyql" path="res://Assets/Textures/Backs/CardBack4.png" id="5_dpavy"]
-[ext_resource type="Script" path="res://Scripts/HandManager.cs" id="6_627g5"]
-[ext_resource type="Script" path="res://Scripts/MeldsList.cs" id="7_m5j3q"]
+[ext_resource type="Script" path="res://Scripts/Managers/HandManager.cs" id="6_627g5"]
+[ext_resource type="Script" path="res://Scripts/Match/MeldsList.cs" id="7_m5j3q"]
 [ext_resource type="Theme" uid="uid://c7j54ylk2661n" path="res://Resources/PinnuckleTheme.tres" id="8_7tyvh"]
 
 [node name="Battle Scene" type="Control"]

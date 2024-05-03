@@ -1,18 +1,18 @@
+using System;
 using Godot;
 using Godot.Collections;
 using Newtonsoft.Json;
-using System;
 
-namespace Pinnuckle.Scripts
+namespace Pinnuckle.Scripts.Match
 {
     public partial class Deck : Node2D
     {
-        private Array<CardData> _localDeck;
-        private SignalBus _signalBus;
+        private Array<Match.CardData> _localDeck;
+        private Autoload.SignalBus _signalBus;
 
-        public Array<CardData> ShuffledDeck;
+        public Array<Match.CardData> ShuffledDeck;
 
-        static readonly Random rand = new Random();
+        private static readonly Random Rand = new Random();
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -29,7 +29,7 @@ namespace Pinnuckle.Scripts
 
         private void ConnectSignals()
         {
-            _signalBus = GetNode<SignalBus>("/root/SignalBus");
+            _signalBus = GetNode<Autoload.SignalBus>("/root/SignalBus");
             _signalBus.ShuffleCards += ShuffleCards;
             _signalBus.DealCards += DealCards;
         }
@@ -39,14 +39,14 @@ namespace Pinnuckle.Scripts
         {
             for (int i = 0; i < ShuffledDeck.Count; i++)
             {
-                int j = rand.Next(i + 1);
+                int j = Rand.Next(i + 1);
                 (ShuffledDeck[i], ShuffledDeck[j]) = (ShuffledDeck[j], ShuffledDeck[i]);
             }
         }
 
         private void DealCards(int amount, string cardsOwner)
         {
-            Array<CardData> cards = ShuffledDeck[..amount];
+            Array<Match.CardData> cards = ShuffledDeck[..amount];
             ShuffledDeck = ShuffledDeck.Slice(amount, ShuffledDeck.Count);
 
             _signalBus.EmitSignal("GiveCards", cardsOwner, cards);
@@ -58,10 +58,10 @@ namespace Pinnuckle.Scripts
             ShuffleCards();
         }
 
-        private Array<CardData> LoadCardData()
+        private Array<Match.CardData> LoadCardData()
         {
             string file = FileAccess.Open("res://Assets/json/cards.json", FileAccess.ModeFlags.Read).GetAsText();
-            return JsonConvert.DeserializeObject<Array<CardData>>(file);
+            return JsonConvert.DeserializeObject<Array<Match.CardData>>(file);
         }
     }
 }
