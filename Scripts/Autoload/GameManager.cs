@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace Pinnuckle.Scripts.Autoload;
 
 public partial class GameManager : Node
 {

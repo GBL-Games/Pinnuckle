@@ -1,10 +1,10 @@
 using Godot;
 
-namespace Pinnuckle.Scripts
+namespace Pinnuckle.Scripts.Match
 {
     public partial class MeldListItem : RichTextLabel
     {
-        [Export] public MeldData MeldListItemData;
+        [Export] public Match.MeldData MeldListItemData;
         [Export] public string MeldListOwner;
 
         private Theme _theme = GD.Load<Theme>("res://Resources/PinnuckleTheme.tres");

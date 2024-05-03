@@ -1,7 +1,9 @@
 using Godot;
 using Godot.Collections;
 
-public partial class CardCombination : GodotObject
+namespace Pinnuckle.Scripts.Match;
+
+public abstract partial class CardCombination : GodotObject
 {
     public string Rank { get; set; }
     public string Suit { get; set; }

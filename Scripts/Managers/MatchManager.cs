@@ -2,9 +2,8 @@ using System;
 using System.Linq;
 using Godot;
 using Godot.Collections;
-using Array = System.Array;
 
-namespace Pinnuckle.Scripts
+namespace Pinnuckle.Scripts.Managers
 {
     public partial class MatchManager : Control
     {
@@ -13,11 +12,11 @@ namespace Pinnuckle.Scripts
         [Export] public int TotalOpponentDmg = 0;
 
         private Random _random;
-        private SignalBus _signalBus;
+        private Autoload.SignalBus _signalBus;
         private string[] _suits = ["Spades", "Clubs", "Diamonds", "Hearts"];
 
-        private CardData _selectedPlayerCard;
-        private CardData _selectedOpponentCard;
+        private Match.CardData _selectedPlayerCard;
+        private Match.CardData _selectedOpponentCard;
         private int _selectedCardIndex;
 
         private bool _isPlayersTurn;
@@ -26,8 +25,8 @@ namespace Pinnuckle.Scripts
         private string _ledSuit;
         private bool _canPlayCard;
 
-        private Array<CardData> _currentPlayerHand = [];
-        private Array<CardData> _currentOpponentHand = [];
+        private Array<Match.CardData> _currentPlayerHand = [];
+        private Array<Match.CardData> _currentOpponentHand = [];
 
         public override void _Ready()
         {
@@ -44,7 +43,7 @@ namespace Pinnuckle.Scripts
 
         private void _ConnectSignals()
         {
-            _signalBus = GetNode<SignalBus>("/root/SignalBus");
+            _signalBus = GetNode<Autoload.SignalBus>("/root/SignalBus");
 
             _signalBus.CardHandUpdated += _UpdateLocalHands;
             _signalBus.CardSelected += _PlayerCardSelected;
@@ -55,7 +54,7 @@ namespace Pinnuckle.Scripts
             _signalBus.EmitSignal("DealCards", 12, "opponent");
         }
 
-        private void _UpdateLocalHands(string handOwner, Array<CardData> hand)
+        private void _UpdateLocalHands(string handOwner, Array<Match.CardData> hand)
         {
             if (handOwner == "player")
             {
@@ -97,7 +96,7 @@ namespace Pinnuckle.Scripts
 
         #region UI Updating
 
-        private void _CalculateMeldsDamage(string listOwner, Array<MeldData> meldList)
+        private void _CalculateMeldsDamage(string listOwner, Array<Match.MeldData> meldList)
         {
             int totalMeldsDmg = meldList.Aggregate(0, (acc, cur) => acc + cur.Value);
 
@@ -139,7 +138,7 @@ namespace Pinnuckle.Scripts
         #region Player Card Playing
 
         // Select player card
-        private void _PlayerCardSelected(CardData cardData)
+        private void _PlayerCardSelected(Match.CardData cardData)
         {
             GD.Print(cardData.Title() + " selected");
             _selectedPlayerCard = cardData;
@@ -266,14 +265,14 @@ namespace Pinnuckle.Scripts
             if (_whoWentFirst == "player") _RunCurrentTrick();
         }
 
-        private CardData _FindBestOpponentCard()
+        private Match.CardData _FindBestOpponentCard()
         {
-            CardData bestCard = null;
-            CardData lowestTrumpCard = null;
-            CardData lowestCard = null;
+            Match.CardData bestCard = null;
+            Match.CardData lowestTrumpCard = null;
+            Match.CardData lowestCard = null;
 
             // Run if the player went first
-            foreach (CardData cardData in _currentOpponentHand)
+            foreach (Match.CardData cardData in _currentOpponentHand)
             {
                 if (_whoWentFirst == "player")
                 {

@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-namespace Pinnuckle.Scripts;
+namespace Pinnuckle.Scripts.Managers;
 
 public enum EffectTypes
 {

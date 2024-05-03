@@ -17,10 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SignalBus="*res://Scripts/SignalBus.cs"
-GameManager="*res://Scripts/GameManager.cs"
-ScenicRouteSignals="*res://addons/ScenicRoute/ScenicRouteSignals.cs"
-ScenicRouteManager="*res://addons/ScenicRoute/ScenicRouteManager.cs"
+SignalBus="*res://Scripts/Autoload/SignalBus.cs"
+GameManager="*res://Scripts/Autoload/GameManager.cs"
+ScenicRoute="*res://addons/ScenicRoute/ScenicRoute.cs"
 
 [display]
 

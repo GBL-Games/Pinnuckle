@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cpw0gky5dgbv1"]
 
 [ext_resource type="Texture2D" uid="uid://dwaj13af7ef6d" path="res://Assets/pixelCards/CuteCardsPixel_outline.png" id="2_qnskc"]
-[ext_resource type="Script" path="res://Scripts/Card.cs" id="2_rxaxh"]
+[ext_resource type="Script" path="res://Scripts/Match/Card.cs" id="2_rxaxh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i2dce"]
 atlas = ExtResource("2_qnskc")

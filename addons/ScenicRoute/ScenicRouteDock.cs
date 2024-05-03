@@ -14,29 +14,28 @@ public partial class SceneData : GodotObject
 [GlobalClass, Tool]
 public partial class ScenicRouteDock : Control
 {
+    private Plugin _plugin;
     private string _scenesPath = "res://addons/ScenicRoute/scenes.json";
     private Array<string> _scenePaths;
     private Dictionary<string, SceneData> _scenes;
 
     private PackedScene _listItem;
     private VBoxContainer _listContainer;
-    private ScenicRouteSignals _scenicRouteSignals;
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        _scenicRouteSignals = GetNode<ScenicRouteSignals>("/root/ScenicRouteSignals");
-        _scenicRouteSignals.RemoveScene += _RemoveScene;
-
         _listContainer = GetNode<VBoxContainer>("Wrapper/Scene List Container/Scene List");
+        _listItem = ResourceLoader.Load<PackedScene>("res://addons/ScenicRoute/SceneListItem.tscn");
 
         _LoadSceneList();
-        _RefreshSceneList();
     }
 
     private void _LoadSceneList()
     {
         string file = FileAccess.Open(_scenesPath, FileAccess.ModeFlags.ReadWrite).GetAsText();
         _scenes = JsonConvert.DeserializeObject<Dictionary<string, SceneData>>(file);
+
+        _PopulateList();
     }
 
     #region Drag N Drop
@@ -60,9 +59,6 @@ public partial class ScenicRouteDock : Control
         }
 
         _SaveSceneList();
-        _RefreshSceneList();
-
-        base._DropData(atPosition, data);
     }
 
     #endregion
@@ -76,13 +72,26 @@ public partial class ScenicRouteDock : Control
         sceneData.Path = scenePath;
 
         _scenes[sceneName.ToLower()] = sceneData;
+        SceneListItem listItemInstance = _listItem.Instantiate<SceneListItem>();
+        listItemInstance.RemoveScene += _RemoveScene;
+        _listContainer.AddChild(listItemInstance);
+        listItemInstance.GetNode<Label>("Panel/Label").Text = sceneName;
     }
 
     private void _RemoveScene(string sceneKey)
     {
+        string sceneAlias = _scenes[sceneKey].Alias;
         _scenes.Remove(sceneKey);
+
+        foreach (Node child in _listContainer.GetChildren())
+        {
+            if (child.GetChild<Panel>(0).GetChild<Label>(0).Text == sceneAlias)
+            {
+                _listContainer.RemoveChild(child);
+            }
+        }
+
         _SaveSceneList();
-        _RefreshSceneList();
     }
 
     private void _SaveSceneList()
@@ -91,28 +100,12 @@ public partial class ScenicRouteDock : Control
         file.StoreString(JsonConvert.SerializeObject(_scenes));
     }
 
-    private void _RefreshSceneList()
-    {
-        if (_listContainer.GetChildCount() > 0)
-        {
-            foreach (Node listItem in _listContainer.GetChildren())
-            {
-                _listContainer.RemoveChild(listItem);
-            }
-        }
-
-        if (_listContainer.GetChildCount() == 0)
-        {
-            _PopulateList();
-        }
-    }
-
     private void _PopulateList()
     {
         foreach (string sceneKey in _scenes.Keys)
         {
-            HBoxContainer listItemInstance = ResourceLoader
-                .Load<PackedScene>("res://addons/ScenicRoute/SceneListItem.tscn").Instantiate<HBoxContainer>();
+            SceneListItem listItemInstance = _listItem.Instantiate<SceneListItem>();
+            listItemInstance.RemoveScene += _RemoveScene;
             _listContainer.AddChild(listItemInstance);
             listItemInstance.GetNode<Label>("Panel/Label").Text = _scenes[sceneKey].Alias;
         }

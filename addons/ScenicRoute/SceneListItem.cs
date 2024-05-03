@@ -3,20 +3,16 @@ using Godot;
 
 namespace Pinnuckle.addons.ScenicRoute;
 
-[Tool]
+[GlobalClass, Tool]
 public partial class SceneListItem : HBoxContainer
 {
-    private ScenicRouteSignals _scenicRouteSignals;
-
-    public override void _Ready()
-    {
-        _scenicRouteSignals = GetNode<ScenicRouteSignals>("/root/ScenicRouteSignals");
-    }
+    [Signal]
+    public delegate void RemoveSceneEventHandler(string sceneKey);
 
     private void _on_remove_pressed()
     {
         string sceneKey = GetNode<Label>("Panel/Label").Text.ToLower();
-        _scenicRouteSignals.EmitSignal("RemoveScene", sceneKey);
+        EmitSignal(nameof(RemoveScene), sceneKey);
     }
 }
 #endif
