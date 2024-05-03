@@ -1,5 +1,6 @@
 using Godot;
 using Pinnuckle.addons.ScenicRoute;
+using Pinnuckle.Scripts.Player;
 
 namespace Pinnuckle.Scripts.ClassSelect;
 
@@ -10,14 +11,21 @@ public partial class ClassSelectItem : PanelContainer
 
     private ScenicRoute _scenicRoute;
 
+    private GameState _gameState = new();
+
     public override void _Ready()
     {
         _scenicRoute = GetNode<ScenicRoute>("/root/ScenicRoute");
+        _gameState = (GameState)_scenicRoute.GetCurrentGameState();
     }
 
     private void _on_class_selected()
     {
-        GD.Print(GetNode<Label>("Label").Text);
-        _scenicRoute.LoadScene("match");
+        string selectedClass = GetNode<Label>("Label").Text;
+        _gameState.CurrentPlayer.PlayerClass.Id = selectedClass.ToCamelCase();
+        _gameState.CurrentPlayer.PlayerClass.Name = selectedClass;
+        _gameState.CurrentPlayer.PlayerClass.Skills = [];
+
+        _scenicRoute.LoadScene("match", _gameState);
     }
 }

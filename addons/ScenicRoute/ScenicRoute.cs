@@ -12,6 +12,8 @@ public partial class ScenicRoute : Node
     private SceneData _currentScene;
     private VBoxContainer _sceneList;
 
+    private Variant _gameState;
+
     public override void _Ready()
     {
         GD.Print("Scenic Route Manager");
@@ -20,8 +22,9 @@ public partial class ScenicRoute : Node
         base._Ready();
     }
 
-    public void LoadScene(string sceneKey)
+    public void LoadScene(string sceneKey, Variant gameState)
     {
+        _gameState = gameState;
         if (_scenes[sceneKey] != null)
         {
             _currentScene = _scenes[sceneKey];
@@ -37,6 +40,11 @@ public partial class ScenicRoute : Node
     public SceneData GetCurrentScene()
     {
         return _currentScene;
+    }
+
+    public Variant GetCurrentGameState()
+    {
+        return _gameState;
     }
 
     public Dictionary<string, SceneData> GetScenes()

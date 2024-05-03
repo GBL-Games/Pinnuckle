@@ -63,7 +63,6 @@ custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
 script = ExtResource("2_r7fy7")
-theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
 ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Rogue"]
@@ -81,7 +80,6 @@ custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
 script = ExtResource("2_r7fy7")
-theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
 ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Cleric"]
@@ -99,7 +97,6 @@ custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
 script = ExtResource("2_r7fy7")
-theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
 ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Witch"]
