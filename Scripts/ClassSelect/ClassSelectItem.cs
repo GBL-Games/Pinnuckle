@@ -18,5 +18,6 @@ public partial class ClassSelectItem : PanelContainer
     private void _on_class_selected()
     {
         GD.Print(GetNode<Label>("Label").Text);
+        _scenicRoute.LoadScene("match");
     }
 }
