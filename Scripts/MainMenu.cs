@@ -19,6 +19,6 @@ public partial class MainMenu : Control
 
     private void _on_start_button_up()
     {
-        _scenicRoute.SwitchCurrentScene("classselect");
+        _scenicRoute.LoadScene("classselect");
     }
 }

@@ -20,7 +20,7 @@ public partial class ScenicRoute : Node
         base._Ready();
     }
 
-    public void SwitchCurrentScene(string sceneKey)
+    public void LoadScene(string sceneKey)
     {
         if (_scenes[sceneKey] != null)
         {

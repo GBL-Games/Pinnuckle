@@ -1,8 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4ny362052fg0"]
+[gd_scene load_steps=4 format=3 uid="uid://b4ny362052fg0"]
 
 [ext_resource type="Script" path="res://Scripts/ClassSelect/ClassSelect.cs" id="1_84qvs"]
+[ext_resource type="Script" path="res://Scripts/ClassSelect/ClassSelectItem.cs" id="2_r7fy7"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y4acp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhgrq"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 3
 border_width_top = 3
@@ -41,10 +42,11 @@ grow_vertical = 2
 columns = 2
 
 [node name="Knight" type="PanelContainer" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_styles/panel = SubResource("StyleBoxFlat_y4acp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+script = ExtResource("2_r7fy7")
+ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Knight"]
 layout_mode = 2
@@ -57,16 +59,17 @@ layout_mode = 2
 theme_type_variation = &"FlatButton"
 
 [node name="Rogue" type="PanelContainer" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_styles/panel = SubResource("StyleBoxFlat_y4acp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+script = ExtResource("2_r7fy7")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Rogue"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
-text = "Rogue
-"
+text = "Rogue"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="GridContainer/Rogue"]
@@ -74,16 +77,17 @@ layout_mode = 2
 theme_type_variation = &"FlatButton"
 
 [node name="Cleric" type="PanelContainer" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_styles/panel = SubResource("StyleBoxFlat_y4acp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+script = ExtResource("2_r7fy7")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Cleric"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
-text = "Cleric
-"
+text = "Cleric"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="GridContainer/Cleric"]
@@ -91,16 +95,17 @@ layout_mode = 2
 theme_type_variation = &"FlatButton"
 
 [node name="Witch" type="PanelContainer" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_styles/panel = SubResource("StyleBoxFlat_y4acp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+script = ExtResource("2_r7fy7")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhgrq")
+ClassName = null
 
 [node name="Label" type="Label" parent="GridContainer/Witch"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
-text = "Witch
-"
+text = "Witch"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="GridContainer/Witch"]
@@ -115,3 +120,8 @@ offset_right = 266.0
 offset_bottom = 64.0
 text = "Choose a Class
 "
+
+[connection signal="pressed" from="GridContainer/Knight/Button" to="GridContainer/Knight" method="_on_class_selected"]
+[connection signal="pressed" from="GridContainer/Rogue/Button" to="GridContainer/Rogue" method="_on_class_selected"]
+[connection signal="pressed" from="GridContainer/Cleric/Button" to="GridContainer/Cleric" method="_on_class_selected"]
+[connection signal="pressed" from="GridContainer/Witch/Button" to="GridContainer/Witch" method="_on_class_selected"]
