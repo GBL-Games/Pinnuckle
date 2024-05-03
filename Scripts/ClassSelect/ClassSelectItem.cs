@@ -14,4 +14,9 @@ public partial class ClassSelectItem : PanelContainer
     {
         _scenicRoute = GetNode<ScenicRoute>("/root/ScenicRoute");
     }
+
+    private void _on_class_selected()
+    {
+        GD.Print(GetNode<Label>("Label").Text);
+    }
 }

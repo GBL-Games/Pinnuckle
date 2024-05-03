@@ -83,10 +83,11 @@ public partial class ScenicRouteDock : Control
         string sceneAlias = _scenes[sceneKey].Alias;
         _scenes.Remove(sceneKey);
 
-        foreach (Node child in _listContainer.GetChildren())
+        foreach (SceneListItem child in _listContainer.GetChildren())
         {
             if (child.GetChild<Panel>(0).GetChild<Label>(0).Text == sceneAlias)
             {
+                child.RemoveScene -= _RemoveScene;
                 _listContainer.RemoveChild(child);
             }
         }
