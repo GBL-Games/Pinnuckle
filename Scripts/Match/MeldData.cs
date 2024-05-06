@@ -3,7 +3,7 @@ using Godot.Collections;
 
 namespace Pinnuckle.Scripts.Match;
 
-public abstract partial class CardCombination : GodotObject
+public partial class CardCombination : GodotObject
 {
     public string Rank { get; set; }
     public string Suit { get; set; }

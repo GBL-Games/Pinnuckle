@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rm0fl3gojt85"]
+[gd_scene load_steps=10 format=3 uid="uid://rm0fl3gojt85"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/MatchManager.cs" id="1_00w78"]
 [ext_resource type="Script" path="res://Scripts/Match/Deck.cs" id="3_d8t6j"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Managers/HandManager.cs" id="6_627g5"]
 [ext_resource type="Script" path="res://Scripts/Match/MeldsList.cs" id="7_m5j3q"]
 [ext_resource type="Theme" uid="uid://c7j54ylk2661n" path="res://Resources/PinnuckleTheme.tres" id="8_7tyvh"]
+[ext_resource type="PackedScene" uid="uid://c87sbno7nvk72" path="res://Objects/PlayerHud.tscn" id="9_al8aa"]
 
 [node name="Battle Scene" type="Control"]
 layout_mode = 3
@@ -188,5 +189,8 @@ position = Vector2(-35, 0)
 
 [node name="Opponent Card" type="Sprite2D" parent="Play Area"]
 position = Vector2(37, 0)
+
+[node name="PlayerHud" parent="." instance=ExtResource("9_al8aa")]
+layout_mode = 1
 
 [connection signal="gui_input" from="Play Card" to="." method="_on_play_card"]
