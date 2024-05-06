@@ -1,86 +1,45 @@
 using Godot;
 using Godot.Collections;
+using Pinnuckle.Scripts.Archetype;
+using Pinnuckle.Scripts.Player;
 
 namespace Pinnuckle.Scripts.Managers;
 
-public enum EffectTypes
+public partial class PlayerManager : Node
 {
-    Poison,
-    Corrosion
-}
+    private PlayerData _playerData;
 
-public partial class StatusEffect : GodotObject
-{
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public EffectTypes EffectType { get; set; }
-}
+    private int _health;
+    private int _block;
 
-public partial class ConsumableItem : GodotObject
-{
-    public string Name { get; set; }
-    public StatusEffect Effect { get; set; }
-    public int Amount { get; set; }
-    public int Duration { get; set; }
-}
+    private Array<EnhanceType> _enhancements = [];
+    private Array<ImpairType> _impairments = [];
+    private Array<ArchetypeSkill> _skills = [];
 
-public partial class Relic : GodotObject
-{
-    public string Name { get; set; }
-}
+    private Control _playerHud;
 
-public partial class Skill : GodotObject
-{
-    public string Name { get; set; }
-    public string Type { get; set; }
-    public ArchTypes ArchType { get; set; }
-    public int Amount { get; set; }
-}
-
-public enum ArchTypes
-{
-    Knight,
-    Priest,
-    Mage,
-    Rogue,
-    Alchemist
-}
-
-public partial class PlayerArchType : GodotObject
-{
-    public ArchTypes ArchType { get; set; }
-    public string Name { get; set; }
-    public int BaseHp { get; set; }
-    public int BaseDefense { get; set; }
-    public Array<Skill> BaseSkills { get; set; }
-}
-
-public partial class Player : Node
-{
-    public PlayerArchType PlayerBaseClass;
-
-    public int PlayerHp;
-    public int PlayerAttack;
-    public int PlayerDefense;
-    public Array<Skill> PlayerSkills;
-    public Array<ConsumableItem> PlayerConsumables;
-    public Array<Relic> PlayerRelics;
-    public Array<StatusEffect> StatusEffects;
-
-    public override void _Ready()
+    public void InitializePlayer(PlayerData playerData, Control playerHud)
     {
-        _initializePlayer();
-        base._Ready();
+        _playerData = playerData;
+        _playerHud = playerHud;
+
+        _skills = _playerData.PlayerArchetype.Skills;
+
+        GD.Print($"Initializing player with the archetype: {_playerData.PlayerArchetype.Name}");
+
+        _InitializePlayerHud();
     }
 
-    private void _initializePlayer()
+    private void _InitializePlayerHud()
     {
-        PlayerHp = PlayerBaseClass.BaseHp;
-        PlayerAttack = 0;
-        PlayerDefense = PlayerBaseClass.BaseDefense;
-        PlayerSkills = PlayerBaseClass.BaseSkills;
-        PlayerConsumables = [];
-        PlayerRelics = [];
-        StatusEffects = [];
+        GD.Print(_playerHud.ToString());
+
+        for (int i = 0; i < _skills.Count; i++)
+        {
+            AtlasTexture atlas = new AtlasTexture();
+            atlas.Atlas = (Texture2D)ResourceLoader.Load("res://Assets/ui/fantasy_epicweapons_pack1_nobg.png");
+            atlas.Region = new Rect2(_skills[i].SkillIconPos, new Vector2(32, 32));
+            _playerHud.GetNode<TextureButton>($"Skill{(i + 1).ToString()}").TextureNormal = atlas;
+        }
     }
 }

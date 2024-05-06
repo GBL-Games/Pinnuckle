@@ -1,5 +1,6 @@
 using Godot;
 using Pinnuckle.addons.ScenicRoute;
+using Pinnuckle.Scripts.Archetype;
 using Pinnuckle.Scripts.Player;
 
 namespace Pinnuckle.Scripts.ClassSelect;
@@ -7,7 +8,7 @@ namespace Pinnuckle.Scripts.ClassSelect;
 [GlobalClass]
 public partial class ClassSelectItem : PanelContainer
 {
-    [Export] public string ClassName;
+    [Export] public ArchetypeData Archetype;
 
     private ScenicRoute _scenicRoute;
 
@@ -17,15 +18,15 @@ public partial class ClassSelectItem : PanelContainer
     {
         _scenicRoute = GetNode<ScenicRoute>("/root/ScenicRoute");
         _gameState = (GameState)_scenicRoute.GetCurrentGameState();
+
+        GetNode<Label>("Label").Text = Archetype.Name;
     }
 
     private void _on_class_selected()
     {
-        string selectedClass = GetNode<Label>("Label").Text;
-        _gameState.CurrentPlayer.PlayerClass.Id = selectedClass.ToCamelCase();
-        _gameState.CurrentPlayer.PlayerClass.Name = selectedClass;
-        _gameState.CurrentPlayer.PlayerClass.Skills = [];
-
+        _gameState.CurrentPlayer = new PlayerData();
+        _gameState.CurrentPlayer.Health = Archetype.Health;
+        _gameState.CurrentPlayer.PlayerArchetype = Archetype;
         _scenicRoute.LoadScene("match", _gameState);
     }
 }

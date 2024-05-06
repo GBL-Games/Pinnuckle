@@ -24,6 +24,7 @@ public partial class MainMenu : Control
 
     private void _on_start_button_up()
     {
+        _InitGameState();
         _scenicRoute.LoadScene("classselect", _gameState);
     }
 }

@@ -1,0 +1,73 @@
+{
+  "knight": {
+    "id": "knight",
+    "name": "Knight",
+    "description": "Noble knight battling with honor using their trusty sword & shield",
+    "isSubArchetype": false,
+    "health": 1000,
+    "skills": [
+      {
+        "id": "slash",
+        "amount": 50,
+        "skillName": "Slash",
+        "skillDescription": "Cut down foes with a powerful slash",
+        "skillCooldown": 3,
+        "skillDuration": 0,
+        "skillKeywords": [
+          "Attack"
+        ],
+        "skillIconPos": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "shieldUp",
+        "amount": 100,
+        "skillName": "Shield Up",
+        "skillDescription": "Raise your shield to defend",
+        "skillCooldown": 3,
+        "skillDuration": 0,
+        "skillKeywords": [
+          "Defense"
+        ],
+        "skillIconPos": {
+          "x": 288,
+          "y": 0
+        }
+      }
+    ],
+    "subArchetypes": [
+      "paladin",
+      "guardian"
+    ]
+  },
+  "rogue": {
+    "id": "rogue",
+    "name": "Rogue",
+    "description": "Rogueitty rogue rogue rogue",
+    "isSubArchetype": false,
+    "health": 800,
+    "skills": [
+      {
+        "id": "poisonBlade",
+        "amount": 50,
+        "skillName": "Poison Blade",
+        "skillDescription": "Coat weapons with deadly toxins to inflict additional damage over time",
+        "skillCooldown": 3,
+        "skillDuration": 2,
+        "skillKeywords": [
+          "Attack",
+          "Impair",
+          "Poison",
+          "Overtime"
+        ],
+        "skillIconPath": "res://Assets/Icons/Weapons/tile_0102.png"
+      }
+    ],
+    "subArchetypes": [
+      "assassin",
+      "thief"
+    ]
+  }
+}

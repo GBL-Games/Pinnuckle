@@ -3,6 +3,7 @@ using Godot;
 using Godot.Collections;
 using Newtonsoft.Json;
 using Pinnuckle.Scripts.Autoload;
+using Pinnuckle.Scripts.Match;
 
 namespace Pinnuckle.Scripts.Managers;
 
@@ -11,7 +12,7 @@ public partial class HandManager : HBoxContainer
 {
     private SignalBus _signalBus;
 
-    private Array<Match.CardData> _currentHand = [];
+    private Array<CardData> _currentHand = [];
 
     private PackedScene _card;
 
@@ -21,8 +22,8 @@ public partial class HandManager : HBoxContainer
     [Export] public NodePath PlayedCardDisplay;
     [Export] public string HandOwner = "player";
 
-    private Array<Match.MeldData> _handMelds;
-    private Array<Match.MeldData> _allMelds;
+    private Array<MeldData> _handMelds;
+    private Array<MeldData> _allMelds;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -30,12 +31,12 @@ public partial class HandManager : HBoxContainer
         _card = ResourceLoader.Load<PackedScene>("res://Objects/Card.tscn");
         _allMelds = LoadMelds();
 
-        _signalBus = GetNode<Autoload.SignalBus>("/root/SignalBus");
+        _signalBus = GetNode<SignalBus>("/root/SignalBus");
         _signalBus.GiveCards += _AddToHand;
         _signalBus.CardPlayed += _RemoveFromHand;
     }
 
-    private void _AddToHand(string owner, Array<Match.CardData> cards)
+    private void _AddToHand(string owner, Array<CardData> cards)
     {
         if (owner == HandOwner)
         {
@@ -44,7 +45,7 @@ public partial class HandManager : HBoxContainer
         }
     }
 
-    private void _RemoveFromHand(string owner, Match.CardData cardData)
+    private void _RemoveFromHand(string owner, CardData cardData)
     {
         if (owner == HandOwner)
         {
@@ -64,7 +65,7 @@ public partial class HandManager : HBoxContainer
 
         for (int i = 0; i < totalCards; i++)
         {
-            Match.Card cardInstance = (Match.Card)_card.Instantiate();
+            Card cardInstance = (Card)_card.Instantiate();
             cardInstance.CardInfo = _currentHand[i];
             cardInstance.CardOwner = HandOwner;
             cardInstance.CardIndex = i;
@@ -77,35 +78,31 @@ public partial class HandManager : HBoxContainer
         _signalBus.EmitSignal("CardHandUpdated", HandOwner, _currentHand);
     }
 
-    private Array<Match.MeldData> GetHandMelds()
+    private Array<MeldData> GetHandMelds()
     {
-        Array<Match.MeldData> madeMelds = new Array<Match.MeldData>();
+        Array<MeldData> madeMelds = new Array<MeldData>();
 
-        foreach (Match.MeldData meldData in _allMelds)
+        foreach (MeldData meldData in _allMelds)
         {
             bool isValidMeld = true;
 
             Godot.Collections.Dictionary<string, int> comboFrequency =
                 new Godot.Collections.Dictionary<string, int>();
 
-            foreach (Match.CardCombination cardCombination in meldData.CardCombinations)
+            foreach (CardCombination cardCombination in meldData.CardCombinations)
             {
                 string key = $"{cardCombination.Rank}-{cardCombination.Suit}";
 
-                if (comboFrequency.ContainsKey(key))
+                if (!comboFrequency.TryAdd(key, 1))
                 {
                     comboFrequency[key]++;
-                }
-                else
-                {
-                    comboFrequency[key] = 1;
                 }
 
                 bool cardFound = false;
                 string comboRank = cardCombination.Rank;
                 string comboSuit = cardCombination.Suit;
 
-                foreach (Match.CardData cardData in _currentHand)
+                foreach (CardData cardData in _currentHand)
                 {
                     if (cardData.Rank == comboRank && (comboSuit == null || cardData.Suit == comboSuit))
                     {
@@ -126,7 +123,7 @@ public partial class HandManager : HBoxContainer
                 int requiredFrequency = pair.Value;
                 int foundFrequency = 0;
 
-                foreach (Match.CardData card in _currentHand)
+                foreach (CardData card in _currentHand)
                 {
                     string rank = pair.Key.Split('-')[0];
                     string suit = pair.Key.Split('-')[1];
@@ -153,9 +150,9 @@ public partial class HandManager : HBoxContainer
         return madeMelds;
     }
 
-    private static Array<Match.MeldData> LoadMelds()
+    private static Array<MeldData> LoadMelds()
     {
         string file = FileAccess.Open("res://Assets/json/melds.json", FileAccess.ModeFlags.Read).GetAsText();
-        return JsonConvert.DeserializeObject<Array<Match.MeldData>>(file);
+        return JsonConvert.DeserializeObject<Array<MeldData>>(file);
     }
 }

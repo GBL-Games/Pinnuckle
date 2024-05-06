@@ -2,6 +2,9 @@ using System;
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using Pinnuckle.addons.ScenicRoute;
+using Pinnuckle.Scripts.Autoload;
+using Pinnuckle.Scripts.Match;
 
 namespace Pinnuckle.Scripts.Managers
 {
@@ -12,11 +15,11 @@ namespace Pinnuckle.Scripts.Managers
         [Export] public int TotalOpponentDmg = 0;
 
         private Random _random;
-        private Autoload.SignalBus _signalBus;
+        private SignalBus _signalBus;
         private string[] _suits = ["Spades", "Clubs", "Diamonds", "Hearts"];
 
-        private Match.CardData _selectedPlayerCard;
-        private Match.CardData _selectedOpponentCard;
+        private CardData _selectedPlayerCard;
+        private CardData _selectedOpponentCard;
         private int _selectedCardIndex;
 
         private bool _isPlayersTurn;
@@ -25,8 +28,12 @@ namespace Pinnuckle.Scripts.Managers
         private string _ledSuit;
         private bool _canPlayCard;
 
-        private Array<Match.CardData> _currentPlayerHand = [];
-        private Array<Match.CardData> _currentOpponentHand = [];
+        private Array<CardData> _currentPlayerHand = [];
+        private Array<CardData> _currentOpponentHand = [];
+
+        private ScenicRoute _scenicRoute;
+        private GameState _gameState;
+        private PlayerManager _playerManager;
 
         public override void _Ready()
         {
@@ -34,16 +41,29 @@ namespace Pinnuckle.Scripts.Managers
 
             GD.Print("Match Started!");
 
-            _ConnectSignals();
-            _SetTrumpSuit();
-            _ChooseFirstMove();
+            _LoadGameState(); // Loads the game state passed from the previous screen
+            _ConnectSignals(); // Connects all the relevant signals
+            _SetTrumpSuit(); // Sets the trump suit
+            _ChooseFirstMove(); // Sets who goes first 
+        }
+
+        private void _LoadGameState()
+        {
+            _scenicRoute = GetNodeOrNull<ScenicRoute>("/root/ScenicRoute");
+            _gameState = (GameState)_scenicRoute.GetCurrentGameState();
+            _playerManager = new PlayerManager();
+
+            if (_gameState != null)
+            {
+                _playerManager.InitializePlayer(_gameState.CurrentPlayer, GetNode<Control>("PlayerHud"));
+            }
         }
 
         #region Match Setup
 
         private void _ConnectSignals()
         {
-            _signalBus = GetNode<Autoload.SignalBus>("/root/SignalBus");
+            _signalBus = GetNode<SignalBus>("/root/SignalBus");
 
             _signalBus.CardHandUpdated += _UpdateLocalHands;
             _signalBus.CardSelected += _PlayerCardSelected;
@@ -54,7 +74,7 @@ namespace Pinnuckle.Scripts.Managers
             _signalBus.EmitSignal("DealCards", 12, "opponent");
         }
 
-        private void _UpdateLocalHands(string handOwner, Array<Match.CardData> hand)
+        private void _UpdateLocalHands(string handOwner, Array<CardData> hand)
         {
             if (handOwner == "player")
             {
@@ -96,7 +116,7 @@ namespace Pinnuckle.Scripts.Managers
 
         #region UI Updating
 
-        private void _CalculateMeldsDamage(string listOwner, Array<Match.MeldData> meldList)
+        private void _CalculateMeldsDamage(string listOwner, Array<MeldData> meldList)
         {
             int totalMeldsDmg = meldList.Aggregate(0, (acc, cur) => acc + cur.Value);
 
@@ -138,7 +158,7 @@ namespace Pinnuckle.Scripts.Managers
         #region Player Card Playing
 
         // Select player card
-        private void _PlayerCardSelected(Match.CardData cardData)
+        private void _PlayerCardSelected(CardData cardData)
         {
             GD.Print(cardData.Title() + " selected");
             _selectedPlayerCard = cardData;
@@ -265,14 +285,14 @@ namespace Pinnuckle.Scripts.Managers
             if (_whoWentFirst == "player") _RunCurrentTrick();
         }
 
-        private Match.CardData _FindBestOpponentCard()
+        private CardData _FindBestOpponentCard()
         {
-            Match.CardData bestCard = null;
-            Match.CardData lowestTrumpCard = null;
-            Match.CardData lowestCard = null;
+            CardData bestCard = null;
+            CardData lowestTrumpCard = null;
+            CardData lowestCard = null;
 
             // Run if the player went first
-            foreach (Match.CardData cardData in _currentOpponentHand)
+            foreach (CardData cardData in _currentOpponentHand)
             {
                 if (_whoWentFirst == "player")
                 {
