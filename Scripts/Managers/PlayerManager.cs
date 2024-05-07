@@ -12,6 +12,7 @@ public partial class PlayerManager : Control
     private PlayerData _playerData;
 
     private float _health;
+    private int _atk;
     private float _maxHealth;
     private float _block;
 
@@ -77,6 +78,16 @@ public partial class PlayerManager : Control
         float healthPercentage = float.Round(_health / _maxHealth * 100);
         GetNode<TextureProgressBar>("HealthBar").Value = healthPercentage;
         GetNode<TextureProgressBar>("Heart").Value = healthPercentage;
+    }
+
+    private void _UpdatedPlayerAtk(int amount)
+    {
+        _atk += amount;
+    }
+
+    private void _UpdatedPlayerDef(int amount)
+    {
+        _block += amount;
     }
 
     #endregion
