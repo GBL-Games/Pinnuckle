@@ -36,6 +36,12 @@ public partial class SignalBus : Node
     public delegate void PlayerHpChangeEventHandler(int amount);
 
     [Signal]
+    public delegate void PlayerAtkChangeEventHandler(int amount);
+
+    [Signal]
+    public delegate void PlayerDefChangeEventHandler(int amount);
+
+    [Signal]
     public delegate void PlayerMpChangeEventHandler(int amount);
 
     [Signal]

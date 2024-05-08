@@ -7,14 +7,14 @@ using Pinnuckle.Scripts.Player;
 
 namespace Pinnuckle.Scripts.Managers;
 
-public partial class PlayerManager : Control
+public partial class HudManager : Control
 {
     private PlayerData _playerData;
 
     private float _health;
     private int _atk;
+    private int _def;
     private float _maxHealth;
-    private float _block;
 
     private Array<EnhanceType> _enhancements = [];
     private Array<ImpairType> _impairments = [];
@@ -51,6 +51,8 @@ public partial class PlayerManager : Control
     private void _ConnectSignals()
     {
         _signalBus.PlayerHpChange += _UpdatePlayerHealth;
+        _signalBus.PlayerAtkChange += _UpdatedPlayerAtk;
+        _signalBus.PlayerDefChange += _UpdatedPlayerDef;
     }
 
     // TODO: Update sprites to be their own individual sprite sheets for more control.  
@@ -83,11 +85,13 @@ public partial class PlayerManager : Control
     private void _UpdatedPlayerAtk(int amount)
     {
         _atk += amount;
+        GetNode<Label>("CurrentStats/AtkContainer/AtkLabel").Text = _atk.ToString();
     }
 
     private void _UpdatedPlayerDef(int amount)
     {
-        _block += amount;
+        _def += amount;
+        GetNode<Label>("CurrentStats/DefContainer/DefLabel").Text = _def.ToString();
     }
 
     #endregion

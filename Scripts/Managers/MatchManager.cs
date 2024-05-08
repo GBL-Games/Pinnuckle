@@ -33,7 +33,7 @@ namespace Pinnuckle.Scripts.Managers
 
         private ScenicRoute _scenicRoute;
         private GameState _gameState;
-        private PlayerManager _playerManager;
+        private HudManager _hudManager;
 
         public override void _Ready()
         {
@@ -104,8 +104,6 @@ namespace Pinnuckle.Scripts.Managers
                 _whoWentFirst = "opponent";
                 _OpponentsTurn();
             }
-
-            GD.Print(_whoWentFirst);
         }
 
         #endregion
@@ -119,6 +117,7 @@ namespace Pinnuckle.Scripts.Managers
             if (listOwner == "player")
             {
                 TotalPlayerDmg = totalMeldsDmg;
+                _signalBus.EmitSignal(nameof(_signalBus.PlayerAtkChange), totalMeldsDmg);
             }
             else
             {
@@ -144,6 +143,12 @@ namespace Pinnuckle.Scripts.Managers
             NodePath path = listOwner == "player"
                 ? "Match UI/UI Right/PlayerMeldsList/Hand Damage"
                 : "Match UI/OpponentMeldsList/Hand Damage";
+
+            if (listOwner == "player" && _selectedPlayerCard != null)
+            {
+                _signalBus.EmitSignal(nameof(_signalBus.PlayerAtkChange),
+                    isLastTrick && _selectedPlayerCard.Rank != "Ace" ? 10 : _selectedPlayerCard.Value);
+            }
 
             GetNode<RichTextLabel>(path).Text =
                 "Total Damage: " + totalDmg;
