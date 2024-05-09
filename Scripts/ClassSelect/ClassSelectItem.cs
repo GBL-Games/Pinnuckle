@@ -25,6 +25,7 @@ public partial class ClassSelectItem : PanelContainer
     private void _on_class_selected()
     {
         _gameState.CurrentPlayer = new PlayerData();
+        _gameState.CurrentPlayer.Block = Archetype.Block;
         _gameState.CurrentPlayer.Health = Archetype.Health;
         _gameState.CurrentPlayer.PlayerArchetype = Archetype;
         _scenicRoute.LoadScene("match", _gameState);

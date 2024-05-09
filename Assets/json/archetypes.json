@@ -5,6 +5,7 @@
     "description": "Noble knight battling with honor using their trusty sword & shield",
     "isSubArchetype": false,
     "health": 1000,
+    "block": 50,
     "skills": [
       {
         "id": "slash",
@@ -48,6 +49,7 @@
     "description": "Rogueitty rogue rogue rogue",
     "isSubArchetype": false,
     "health": 800,
+    "block": 0,
     "skills": [
       {
         "id": "poisonBlade",
@@ -62,7 +64,10 @@
           "Poison",
           "Overtime"
         ],
-        "skillIconPath": "res://Assets/Icons/Weapons/tile_0102.png"
+        "skillIconPos": {
+          "x": 96,
+          "y": 132
+        } 
       }
     ],
     "subArchetypes": [

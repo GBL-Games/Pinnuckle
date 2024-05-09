@@ -1,0 +1,236 @@
+[gd_scene load_steps=16 format=3 uid="uid://c87sbno7nvk72"]
+
+[ext_resource type="Script" path="res://Scripts/Managers/HudManager.cs" id="1_4wltj"]
+[ext_resource type="Texture2D" uid="uid://2y3futsa6cyb" path="res://Assets/ui/GUISprite.png" id="1_hkkaf"]
+[ext_resource type="Texture2D" uid="uid://r355loxa8jdk" path="res://Assets/ui/Newstuff 1.png" id="1_tnivs"]
+[ext_resource type="Texture2D" uid="uid://dq10c8pybrnnw" path="res://Assets/ui/fantasy_weapons_pack1_noglow.png" id="2_84j4f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lync"]
+atlas = ExtResource("2_84j4f")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5ffr"]
+atlas = ExtResource("2_84j4f")
+region = Rect2(288, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwbip"]
+atlas = ExtResource("1_tnivs")
+region = Rect2(5, 106, 70, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x338m"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(80, 112, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tafq7"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(80, 96, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xsd1d"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb5yu"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cs5u"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(80, 112, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_332bw"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(80, 96, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvsv4"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7w2l"]
+atlas = ExtResource("1_hkkaf")
+region = Rect2(16, 16, 16, 16)
+
+[node name="MatchHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_4wltj")
+metadata/_edit_vertical_guides_ = [15.0, 74.0]
+
+[node name="Opponent Hud" type="Control" parent="."]
+layout_direction = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CurrentStats" type="HBoxContainer" parent="Opponent Hud"]
+layout_direction = 2
+layout_mode = 0
+offset_left = 354.0
+offset_top = 4.0
+offset_right = 448.0
+offset_bottom = 36.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/separation = 4
+
+[node name="AtkContainer" type="HBoxContainer" parent="Opponent Hud/CurrentStats"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="AtkIcon" type="TextureRect" parent="Opponent Hud/CurrentStats/AtkContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_4lync")
+
+[node name="AtkLabel" type="Label" parent="Opponent Hud/CurrentStats/AtkContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "200"
+
+[node name="DefContainer" type="HBoxContainer" parent="Opponent Hud/CurrentStats"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="DefIcon" type="TextureRect" parent="Opponent Hud/CurrentStats/DefContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_o5ffr")
+
+[node name="DefLabel" type="Label" parent="Opponent Hud/CurrentStats/DefContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "100"
+
+[node name="SkillsBG" type="TextureRect" parent="Opponent Hud"]
+layout_mode = 2
+offset_left = 3.00006
+offset_top = 34.0
+offset_right = 73.0001
+offset_bottom = 57.0
+scale = Vector2(0.84, 0.84)
+texture = SubResource("AtlasTexture_dwbip")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Opponent Hud"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 18.0
+offset_right = 76.0
+offset_bottom = 34.0
+value = 100.0
+fill_mode = 1
+texture_over = SubResource("AtlasTexture_x338m")
+texture_progress = SubResource("AtlasTexture_tafq7")
+
+[node name="Heart" type="TextureProgressBar" parent="Opponent Hud"]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 16.0
+offset_bottom = 37.0
+value = 100.0
+fill_mode = 3
+texture_over = SubResource("AtlasTexture_xsd1d")
+texture_progress = SubResource("AtlasTexture_tb5yu")
+
+[node name="Player Hud" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="CurrentStats" type="HBoxContainer" parent="Player Hud"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 175.0
+offset_right = 113.0
+offset_bottom = 207.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/separation = 4
+
+[node name="AtkContainer" type="HBoxContainer" parent="Player Hud/CurrentStats"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="AtkIcon" type="TextureRect" parent="Player Hud/CurrentStats/AtkContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_4lync")
+
+[node name="AtkLabel" type="Label" parent="Player Hud/CurrentStats/AtkContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "200"
+
+[node name="DefContainer" type="HBoxContainer" parent="Player Hud/CurrentStats"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="DefIcon" type="TextureRect" parent="Player Hud/CurrentStats/DefContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_o5ffr")
+
+[node name="DefLabel" type="Label" parent="Player Hud/CurrentStats/DefContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "100"
+
+[node name="SkillsBG" type="TextureRect" parent="Player Hud"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = 205.0
+offset_right = 85.0
+offset_bottom = 228.0
+scale = Vector2(0.84, 0.84)
+texture = SubResource("AtlasTexture_dwbip")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Player Hud"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 189.0
+offset_right = 76.0
+offset_bottom = 229.0
+value = 100.0
+texture_over = SubResource("AtlasTexture_2cs5u")
+texture_progress = SubResource("AtlasTexture_332bw")
+
+[node name="Heart" type="TextureProgressBar" parent="Player Hud"]
+layout_mode = 0
+offset_top = 192.0
+offset_right = 40.0
+offset_bottom = 232.0
+value = 100.0
+fill_mode = 3
+texture_over = SubResource("AtlasTexture_fvsv4")
+texture_progress = SubResource("AtlasTexture_h7w2l")
+
+[node name="Skill1" type="TextureButton" parent="Player Hud"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 208.0
+offset_right = 50.0
+offset_bottom = 240.0
+scale = Vector2(0.41, 0.41)
+mouse_default_cursor_shape = 2
+
+[node name="Skill2" type="TextureButton" parent="Player Hud"]
+layout_mode = 2
+offset_left = 38.0
+offset_top = 208.0
+offset_right = 70.0
+offset_bottom = 240.0
+scale = Vector2(0.41, 0.41)
+
+[node name="Skill3" type="TextureButton" parent="Player Hud"]
+layout_mode = 2
+offset_left = 58.0
+offset_top = 208.094
+offset_right = 90.0
+offset_bottom = 240.094
+scale = Vector2(0.41, 0.41)

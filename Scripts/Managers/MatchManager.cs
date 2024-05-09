@@ -33,7 +33,7 @@ namespace Pinnuckle.Scripts.Managers
 
         private ScenicRoute _scenicRoute;
         private GameState _gameState;
-        private PlayerManager _playerManager;
+        private HudManager _hudManager;
 
         public override void _Ready()
         {
@@ -41,22 +41,10 @@ namespace Pinnuckle.Scripts.Managers
 
             GD.Print("Match Started!");
 
-            _LoadGameState(); // Loads the game state passed from the previous screen
             _ConnectSignals(); // Connects all the relevant signals
+            _LoadGameState(); // Loads the game state passed from the previous screen
             _SetTrumpSuit(); // Sets the trump suit
             _ChooseFirstMove(); // Sets who goes first 
-        }
-
-        private void _LoadGameState()
-        {
-            _scenicRoute = GetNodeOrNull<ScenicRoute>("/root/ScenicRoute");
-            _gameState = (GameState)_scenicRoute.GetCurrentGameState();
-            _playerManager = new PlayerManager();
-
-            if (_gameState != null)
-            {
-                _playerManager.InitializePlayer(_gameState.CurrentPlayer, GetNode<Control>("PlayerHud"));
-            }
         }
 
         #region Match Setup
@@ -72,6 +60,14 @@ namespace Pinnuckle.Scripts.Managers
             _signalBus.EmitSignal("ShuffleCards");
             _signalBus.EmitSignal("DealCards", 12, "player");
             _signalBus.EmitSignal("DealCards", 12, "opponent");
+        }
+
+        private void _LoadGameState()
+        {
+            _scenicRoute = GetNodeOrNull<ScenicRoute>("/root/ScenicRoute");
+            _gameState = (GameState)_scenicRoute.GetCurrentGameState();
+
+            _signalBus.EmitSignal(nameof(_signalBus.PlayerHpChange), -500);
         }
 
         private void _UpdateLocalHands(string handOwner, Array<CardData> hand)
@@ -108,8 +104,6 @@ namespace Pinnuckle.Scripts.Managers
                 _whoWentFirst = "opponent";
                 _OpponentsTurn();
             }
-
-            GD.Print(_whoWentFirst);
         }
 
         #endregion
@@ -123,6 +117,7 @@ namespace Pinnuckle.Scripts.Managers
             if (listOwner == "player")
             {
                 TotalPlayerDmg = totalMeldsDmg;
+                _signalBus.EmitSignal(nameof(_signalBus.PlayerAtkChange), totalMeldsDmg);
             }
             else
             {
@@ -149,6 +144,12 @@ namespace Pinnuckle.Scripts.Managers
                 ? "Match UI/UI Right/PlayerMeldsList/Hand Damage"
                 : "Match UI/OpponentMeldsList/Hand Damage";
 
+            if (listOwner == "player" && _selectedPlayerCard != null)
+            {
+                _signalBus.EmitSignal(nameof(_signalBus.PlayerAtkChange),
+                    isLastTrick && _selectedPlayerCard.Rank != "Ace" ? 10 : _selectedPlayerCard.Value);
+            }
+
             GetNode<RichTextLabel>(path).Text =
                 "Total Damage: " + totalDmg;
         }
@@ -160,6 +161,7 @@ namespace Pinnuckle.Scripts.Managers
         // Select player card
         private void _PlayerCardSelected(CardData cardData)
         {
+            _signalBus.EmitSignal(nameof(_signalBus.PlayerHpChange), -500);
             GD.Print(cardData.Title() + " selected");
             _selectedPlayerCard = cardData;
         }
@@ -167,7 +169,6 @@ namespace Pinnuckle.Scripts.Managers
         // Play player card
         private void _PlayerCardPlayed()
         {
-            _signalBus.EmitSignal("CardPlayed", "player", _selectedPlayerCard);
             if (_whoWentFirst == "opponent") _RunCurrentTrick(); // If opponent went first run the trick
             if (_whoWentFirst == "player") _OpponentsTurn(); // If player went first run opponent turn
         }
